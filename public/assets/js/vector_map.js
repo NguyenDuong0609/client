@@ -1,0 +1,3 @@
+
+md.initDashboardPageCharts();
+md.initVectorMap();

@@ -6,7 +6,7 @@ const porfolio = () => {
         <div>
            <Head>
                 <title>Personal Portfolio Webiste</title>
-                <meta charset="UTF-8"/>
+                <meta charSet="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link href="porfolio/css/style.css" rel="stylesheet"/>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.5/typed.min.js"></script>
