@@ -8,7 +8,7 @@ let socket;
 
 export default function Home() {
 
-  const ENDPOINT = 'localhost:5000';
+  const ENDPOINT = 'http://103.81.86.16:5000';
 
   useEffect(() => {
     
