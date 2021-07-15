@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     
-    socket = io();
+    socket = io(ENDPOINT);
 
     socket.emit('join');
     return () => {
