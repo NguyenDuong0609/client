@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Head from 'next/head'
@@ -8,6 +8,13 @@ import Document, { Html, Main, NextScript } from 'next/document'
 import $ from 'jquery';
 
 const LayoutAdmin = ({ children }) => {
+
+    useEffect(() => {
+        if((localStorage.getItem('authenticate') == false) || !(localStorage.getItem('authenticate'))) {
+            window.location.href='/admin/login';
+       }
+    });
+
     return (
         <>
             <Head>
@@ -119,6 +126,7 @@ const LayoutAdmin = ({ children }) => {
             <script src="../assets/js/material-dashboard.min.js?v=2.2.2" type="text/javascript"></script>
             {/* Material Dashboard DEMO methods, don't include it in your project! */}
             {/* Sharrre libray */}
+            <script src="../assets/js/plugins/bootstrap-notify.js"></script>
             <script src="../assets/demo/jquery.sharrre.js"></script>
             <script src="../assets/js/custom.js"/>
             <noscript>

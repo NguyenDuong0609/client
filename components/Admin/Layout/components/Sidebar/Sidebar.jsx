@@ -43,6 +43,12 @@ const Sidebar = () => {
                  <ul className="nav">
                     <li className="nav-item active ">
                         <a className="nav-link" href="../examples/dashboard.html">
+                            <i className="material-icons">Users</i>
+                            <p> User </p>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="../examples/dashboard.html">
                             <i className="material-icons">dashboard</i>
                             <p> Dashboard </p>
                         </a>

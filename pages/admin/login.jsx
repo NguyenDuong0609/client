@@ -1,13 +1,35 @@
-import { Html } from 'next/document';
+import Document, { Html, Main, NextScript } from 'next/document'
 import Head from 'next/head'
 import Image from 'next/image'
 import LayoutAdmin from '../../components/Admin/Layout/LayoutAdmin'
 
-export default function Home() {
-    return (
-      <html lang="en">
+import { useState } from 'react';
+import axios from "axios";
 
-        <head>
+export default function Home({ req, res }) {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    function submit(e) {
+      if(email == null || password == null) {
+        alert('Please login');
+      } else {
+        axios.post("http://localhost:5000/api/v1/admin/login", { email: email, password: password })
+        .then((res) => {
+          if(!res.data.error) {
+            localStorage.setItem('authenticate', true);
+            window.location.href='/admin';
+          }else {
+              alert(res.data.error);
+          }
+        });
+      }
+    }
+    return (
+      <>
+
+        <Head>
           <meta charSet="utf-8" />
           <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png"/>
           <link rel="icon" type="image/png" href="../../assets/img/favicon.png"/>
@@ -64,9 +86,9 @@ export default function Home() {
                     }}
                 />
           {/* End Google Tag Manager */}
-        </head>
+        </Head>
 
-        <body className="off-canvas-sidebar">
+        <main className="off-canvas-sidebar">
           {/* Extra details for Live View on GitHub Pages */}
           {/* Google Tag Manager (noscript) */}
           <noscript
@@ -75,49 +97,7 @@ export default function Home() {
             }}
           />
           {/* End Google Tag Manager (noscript) */}
-          {/* Navbar */}
-          <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
-            <div className="container">
-              <div className="navbar-wrapper">
-                <a className="navbar-brand" href="javascript:;">Login Page</a>
-              </div>
-              <button className="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="sr-only">Toggle navigation</span>
-                <span className="navbar-toggler-icon icon-bar"></span>
-                <span className="navbar-toggler-icon icon-bar"></span>
-                <span className="navbar-toggler-icon icon-bar"></span>
-              </button>
-              <div className="collapse navbar-collapse justify-content-end">
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <a href="../dashboard.html" className="nav-link">
-                      <i className="material-icons">dashboard</i>
-                      Dashboard
-                    </a>
-                  </li>
-                  <li className="nav-item ">
-                    <a href="../pages/register.html" className="nav-link">
-                      <i className="material-icons">person_add</i>
-                      Register
-                    </a>
-                  </li>
-                  <li className="nav-item  active ">
-                    <a href="../pages/login.html" className="nav-link">
-                      <i className="material-icons">fingerprint</i>
-                      Login
-                    </a>
-                  </li>
-                  <li className="nav-item ">
-                    <a href="../pages/lock.html" className="nav-link">
-                      <i className="material-icons">lock_open</i>
-                      Lock
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-          {/* End Navbar */}
+
           <div className="wrapper wrapper-full-page">
             <div className="page-header login-page header-filter" filter-color="black" 
                 style={{ 
@@ -152,20 +132,10 @@ export default function Home() {
                             <div className="input-group">
                               <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                  <i className="material-icons">face</i>
-                                </span>
-                              </div>
-                              <input type="text" className="form-control" placeholder="First Name..."/>
-                            </div>
-                          </span>
-                          <span className="bmd-form-group">
-                            <div className="input-group">
-                              <div className="input-group-prepend">
-                                <span className="input-group-text">
                                   <i className="material-icons">email</i>
                                 </span>
                               </div>
-                              <input type="email" className="form-control" placeholder="Email..."/>
+                              <input type="email" name="email" value={email} onChange={(e) => {setEmail(e.target.value)}} className="form-control" placeholder="Email..."/>
                             </div>
                           </span>
                           <span className="bmd-form-group">
@@ -175,12 +145,12 @@ export default function Home() {
                                   <i className="material-icons">lock_outline</i>
                                 </span>
                               </div>
-                              <input type="password" className="form-control" placeholder="Password..."/>
+                              <input type="password" name="password" value={password} onChange={(e) => {setPassword(e.target.value)}} className="form-control" placeholder="Password..."/>
                             </div>
                           </span>
                         </div>
                         <div className="card-footer justify-content-center">
-                          <a href="#pablo" className="btn btn-rose btn-link btn-lg">Lets Go</a>
+                          <a href="#pablo" onClick={() => submit()} className="btn btn-rose btn-link btn-lg">Lets Go</a>
                         </div>
                       </div>
                     </form>
@@ -189,30 +159,16 @@ export default function Home() {
               </div>
               <footer className="footer">
                 <div className="container">
-                  <nav className="float-left">
+                  {/* <nav className="float-left">
                     <ul>
                       <li>
                         <a href="https://www.creative-tim.com">
                           Creative Tim
                         </a>
                       </li>
-                      <li>
-                        <a href="https://creative-tim.com/presentation">
-                          About Us
-                        </a>
-                      </li>
-                      <li>
-                        <a href="http://blog.creative-tim.com">
-                          Blog
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://www.creative-tim.com/license">
-                          Licenses
-                        </a>
-                      </li>
+
                     </ul>
-                  </nav>
+                  </nav> */}
                   <div className="copyright float-right">
                     &copy;
                     <script>
@@ -238,7 +194,7 @@ export default function Home() {
           {/*  Notifications Plugin    */}
           <script src="../../assets/js/plugins/bootstrap-notify.js"></script>
           {/* Control Center for Material Dashboard: parallax effects, scripts for the example pages etc */}
-          <script src="../../assets/js/material-dashboard.min.js?v=2.2.2" type="text/javascript"></script>
+          <script src="../../assets/js/material-dashboard.min.js?v=2.2.2"></script>
           {/* Material Dashboard DEMO methods, don't include it in your project! */}
           <script src="../../assets/js/login.js"></script>
           {/* Sharrre libray */}
@@ -246,8 +202,8 @@ export default function Home() {
           <noscript>
             <img height="1" width="1" style={{ display:"none" }} src="https://www.facebook.com/tr?id=111649226022273&ev=PageView&noscript=1" />
           </noscript>
-        </body>
+        </main>
 
-      </html>
+      </>
     );
 }

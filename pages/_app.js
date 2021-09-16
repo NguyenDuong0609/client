@@ -11,7 +11,14 @@ function MyApp({ Component, pageProps }) {
   if(router.asPath === '/admin/login') {
     return <Component {...pageProps} />
   }
-  if(router.asPath === '/admin') {
+  if(router.asPath === '/admin/dashboard') {
+    return (
+      <LayoutAdmin>
+        <Component {...pageProps}/>
+      </LayoutAdmin>
+    );
+  }
+  if(router.asPath === '/admin/user') {
     return (
       <LayoutAdmin>
         <Component {...pageProps}/>
