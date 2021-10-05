@@ -2,6 +2,7 @@ import Document, { Html, Main, NextScript } from 'next/document'
 import Head from 'next/head'
 import Image from 'next/image'
 import LayoutAdmin from '../../components/Admin/Layout/LayoutAdmin'
+import Cookies from 'js-cookie'
 
 import { useState } from 'react';
 import axios from "axios";
@@ -19,7 +20,8 @@ export default function Home({ req, res }) {
         .then((res) => {
           if(!res.data.error) {
             localStorage.setItem('authenticate', true);
-            window.location.href='/admin';
+            Cookies.set('token', res.data.token);
+            window.location.href='/admin/user';
           }else {
               alert(res.data.error);
           }
@@ -28,7 +30,6 @@ export default function Home({ req, res }) {
     }
     return (
       <>
-
         <Head>
           <meta charSet="utf-8" />
           <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png"/>

@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import LayoutAdmin from '../../components/Admin/Layout/LayoutAdmin'
+import Cookies from 'js-cookie';
+
 
 export default function Home() {
   return (

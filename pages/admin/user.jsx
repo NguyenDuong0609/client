@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import Head from "next/head";
 import Image from "next/image";
 import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
+import Cookies from 'js-cookie';
 
 import axios from "axios";
 
@@ -27,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const getStaticProps = async () => {
-  const res = await fetch('http://103.81.86.16:5000/api/v1/admin/users');
+export const getServerSideProps = async (context) => {
+  const token = context.req.cookies.token;
+  const res = await fetch('http://103.81.86.16:5000/api/v1/admin/users', {
+    headers: { 'Authorization': token}
+  });
   const data = await res.json();
 
   return {
@@ -65,8 +69,9 @@ export default function Home({ users }) {
       setPassword("");
     }else{
       setIdUser(idUser);
-      axios.get("http://103.81.86.16:5000/api/v1/admin/user/"+ idUser)
+      axios.get("http://localhost:5000/api/v1/admin/user/"+ idUser)
         .then((res) => {
+          console.log(res)
           setName(res.data.user.name);
           setEmail(res.data.user.email);
           setRole(res.data.user.role);
@@ -75,7 +80,7 @@ export default function Home({ users }) {
   }
 
   function hanldeDeleteUser() {
-    axios.delete("http://103.81.86.16:5000/api/v1/admin/user/"+ idUser)
+    axios.delete("http://localhost:5000/api/v1/admin/user/"+ idUser)
       .then((res) => {
         window.location.href='/admin/user';
       });
@@ -85,7 +90,7 @@ export default function Home({ users }) {
     if(email == "" || password == "" || name == "" || role == "") {
       alert('Please enter fields');
     } else {
-      axios.post("http://103.81.86.16:5000/api/v1/admin/register", { name: name, email: email, password: password, role: role })
+      axios.post("http://localhost:5000/api/v1/admin/register", { name: name, email: email, password: password, role: role })
       .then((res) => {
         if(!res.data.error) {
           window.location.href='/admin/user';
@@ -97,7 +102,7 @@ export default function Home({ users }) {
   }
 
   function update() {
-    axios.put("http://103.81.86.16:5000/api/v1/admin/user/"+ idUser, { name: name, email: email, role: role })
+    axios.put("http://localhost:5000/api/v1/admin/user/"+ idUser, { name: name, email: email, role: role })
       .then((res) => {
         if(!res.data.error) {
           setIdUser("");
