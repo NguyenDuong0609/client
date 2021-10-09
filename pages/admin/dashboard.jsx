@@ -1,16 +1,11 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import LayoutAdmin from '../../components/Admin/Layout/LayoutAdmin'
-import Cookies from 'js-cookie';
-
+import Head from "next/head";
+import Image from "next/image";
+import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
+import Cookies from "js-cookie";
 
 export default function Home() {
   return (
-    <>
-      {/* Extra details for Live View on GitHub Pages */}
-      {/* Google Tag Manager (noscript) */}
-      {/* <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> */}
-      {/* End Google Tag Manager (noscript) */}
+    <LayoutAdmin>
         <div className="main-panel">
           <nav className="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
             <div className="container-fluid">
@@ -21,7 +16,7 @@ export default function Home() {
                     <i className="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
                   </button>
                 </div>
-                <a className="navbar-brand" href="javascript:;">Dashboard</a>
+                <a className="navbar-brand" href="#!">Dashboard</a>
               </div>
               <button className="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="sr-only">Toggle navigation</span>
@@ -30,18 +25,9 @@ export default function Home() {
                 <span className="navbar-toggler-icon icon-bar"></span>
               </button>
               <div className="collapse navbar-collapse justify-content-end">
-                <form className="navbar-form">
-                  <div className="input-group no-border">
-                    <input type="text" value="" className="form-control" placeholder="Search..."/>
-                    <button type="submit" className="btn btn-white btn-round btn-just-icon">
-                      <i className="material-icons">search</i>
-                      <div className="ripple-container"></div>
-                    </button>
-                  </div>
-                </form>
                 <ul className="navbar-nav">
                   <li className="nav-item">
-                    <a className="nav-link" href="javascript:;">
+                    <a className="nav-link" href="#!">
                       <i className="material-icons">dashboard</i>
                       <p className="d-lg-none d-md-block">
                         Stats
@@ -65,7 +51,7 @@ export default function Home() {
                     </div>
                   </li>
                   <li className="nav-item dropdown">
-                    <a className="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a className="nav-link" href="#!" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i className="material-icons">person</i>
                       <p className="d-lg-none d-md-block">
                         Account
@@ -500,6 +486,6 @@ export default function Home() {
               </div>
           </footer>
         </div>
-    </>
-  )
+    </LayoutAdmin>
+  );
 }

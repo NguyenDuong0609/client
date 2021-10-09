@@ -1,35 +1,23 @@
-import '../styles/globals.css'
-import Layout from '../components/Layout/Layout';
-import LayoutAdmin from '../components/Admin/Layout/LayoutAdmin';
-import { useRouter } from 'next/router'
+import "../styles/globals.css";
+import { useEffect } from "react";
+// import { StoreProvider } from '../utils/Store';
+import { SnackbarProvider } from "notistack";
 
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-  if(router.asPath === '/porfolio') {
-    return <Component {...pageProps} />
-  }
-  if(router.asPath === '/admin/login') {
-    return <Component {...pageProps} />
-  }
-  if(router.asPath === '/admin/dashboard') {
-    return (
-      <LayoutAdmin>
-        <Component {...pageProps}/>
-      </LayoutAdmin>
-    );
-  }
-  if(router.asPath === '/admin/user') {
-    return (
-      <LayoutAdmin>
-        <Component {...pageProps}/>
-      </LayoutAdmin>
-    );
-  }
+  useEffect(() => {
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
   return (
-    <Layout>
-      <Component {...pageProps}/>
-    </Layout>
+    <SnackbarProvider anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+      {/* <StoreProvider>
+        <Component {...pageProps} />
+      </StoreProvider> */}
+      <Component {...pageProps} />
+    </SnackbarProvider>
   );
 }
 
-export default MyApp
+export default MyApp;
