@@ -40,7 +40,6 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-/** @param {import('next').InferGetStaticPropsType<typeof getStaticProps> } props */
 export default function Home({ users }) {
   const classes = useStyles();
   const [editmodal, setEditModal] = useState(false);

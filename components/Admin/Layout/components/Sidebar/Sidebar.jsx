@@ -1,6 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+  
+export default function Sidebar({users}) {
+    const [infoUser, setInFoUser] = useState(false);
 
-const Sidebar = () => {
+    useEffect(() => {
+        axios.get("http://103.81.86.16:5000/api/v1/admin/me", {
+            headers: { Authorization: Cookies.get("token") },
+          })
+            .then((res) => {
+              setInFoUser(res.data.user);
+            });
+    }, []);
+
+    function logOut() {
+        axios.get("http://103.81.86.16:5000/api/v1/admin/logout/")
+            .then((res) => {
+                Cookies.remove("token");
+                localStorage.removeItem('authenticate');
+                window.location.href = "/admin/login";
+            });
+    }
+
     return (
         <div className="sidebar" data-color="rose" data-background-color="black" data-image="../assets/img/sidebar-1.jpg">
             <div className="logo">
@@ -14,7 +36,7 @@ const Sidebar = () => {
                     </div>
                     <div className="user-info">
                         <a data-toggle="collapse" href="#collapseExample" className="username">
-                            <span>Tania Andrew<b className="caret"></b></span>
+                            <span>{infoUser.name}<b className="caret"></b></span>
                         </a>
                         <div className="collapse" id="collapseExample">
                             <ul className="nav">
@@ -32,8 +54,8 @@ const Sidebar = () => {
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">
-                                        <span className="sidebar-mini"> S </span>
-                                        <span className="sidebar-normal"> Settings </span>
+                                        <span className="sidebar-mini"> L </span>
+                                        <span className="sidebar-normal" onClick={() => logOut()}> Logout </span>
                                     </a>
                                 </li>
                             </ul>
@@ -303,5 +325,3 @@ const Sidebar = () => {
         </div>
     );
 }
-
-export default Sidebar;
