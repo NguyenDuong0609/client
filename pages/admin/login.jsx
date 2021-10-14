@@ -101,7 +101,7 @@ export default function Home({ req, res }) {
                           </span>
                         </div>
                         <div className="card-footer justify-content-center">
-                          <a href="#pablo" onClick={() => submit()} className="btn btn-rose btn-link btn-lg">Lets Go</a>
+                          <a onClick={() => submit()} className="btn btn-rose btn-link btn-lg">Lets Go</a>
                         </div>
                       </div>
                     </form>

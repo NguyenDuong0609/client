@@ -3,16 +3,13 @@ import Head from "next/head";
 import Image from "next/image";
 import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
 import Cookies from "js-cookie";
-
-import axios from "axios";
-
-import { makeStyles } from "@material-ui/core/styles";
-import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-// @material-ui/icons
+import Slide from "@material-ui/core/Slide";
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -30,77 +27,102 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/users", {
+  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/categories", {
     headers: { Authorization: token },
   });
+
+  const parent = await fetch("http://103.81.86.16:5000/api/v1/admin/categories-parent", {
+    headers: { Authorization: token },
+  });
+
+  const dataParent = await parent.json();
+
   const data = await res.json();
 
   return {
-    props: { users: data.users },
+    props: { categories: data.categories, categoriesParent: dataParent.category },
   };
 };
 
 /** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
-export default function Home({ users }) {
+export default function Category({ categories, categoriesParent }) {
   const classes = useStyles();
   const [editmodal, setEditModal] = useState(false);
   const [deletemodal, setDeleteModal] = useState(false);
 
-  const [role, setRole] = useState("");
-  const [idUser, setIdUser] = useState("");
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [slug, setSlug] = useState("");
+  const [parentId, setParentId] = useState("");
+  const [idCategory, setIdCategory] = useState(null);
 
-  function submit() {
-    if (idUser === "") {
-      add();
-    } else {
-      update();
-      getStaticProps();
-    }
+  function sanitizeTitle(title) {
+    var slug = "";
+    // Change to lower case
+    var titleLower = title.toLowerCase();
+    // Letter "e"
+    slug = titleLower.replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, "e");
+    // Letter "a"
+    slug = slug.replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, "a");
+    // Letter "o"
+    slug = slug.replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, "o");
+    // Letter "u"
+    slug = slug.replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, "u");
+    // Letter "d"
+    slug = slug.replace(/đ/gi, "d");
+    // Trim the last whitespace
+    slug = slug.replace(/\s*$/g, "");
+    // Change whitespace to "-"
+    slug = slug.replace(/\s+/g, "-");
+
+    return slug;
   }
 
-  function hanldeEditUser(idUser) {
-    if (idUser == null) {
+  function hanldeEditCategory(idCategory) {
+    if (idCategory == null) {
       setName("");
-      setEmail("");
-      setPassword("");
+      setSlug("");
+      setParentId("");
     } else {
-      setIdUser(idUser);
+      setIdCategory(idCategory);
       axios
-        .get("http://103.81.86.16:5000/api/v1/admin/user/" + idUser)
+        .get("http://103.81.86.16:5000/api/v1/admin/category/" + idCategory)
         .then((res) => {
-          console.log(res);
-          setName(res.data.user.name);
-          setEmail(res.data.user.email);
-          setRole(res.data.user.role);
+          setName(res.data.category[0].name);
+          setSlug(res.data.category[0].slug);
+          setParentId(res.data.category[0].parentId);
         });
     }
   }
 
-  function hanldeDeleteUser() {
+  function hanldeDeleteCategory() {
     axios
-      .delete("http://103.81.86.16:5000/api/v1/admin/user/" + idUser)
+      .delete("http://103.81.86.16:5000/api/v1/admin/category/delete/" + idCategory)
       .then((res) => {
-        window.location.href = "/admin/user";
+        window.location.href = "/admin/category";
       });
   }
 
+  function submit() {
+    if (idCategory == null) {
+      add();
+    } else {
+      update();
+    }
+  }
+
   function add() {
-    if (email == "" || password == "" || name == "" || role == "") {
+    if (name == "" || slug == "") {
       alert("Please enter fields");
     } else {
       axios
-        .post("http://103.81.86.16:5000/api/v1/admin/register", {
+        .post("http://103.81.86.16:5000/api/v1/admin/category/create", {
           name: name,
-          email: email,
-          password: password,
-          role: role,
+          slug: slug,
+          parentId: parentId,
         })
         .then((res) => {
           if (!res.data.error) {
-            window.location.href = "/admin/user";
+            window.location.href = "/admin/category";
           } else {
             alert(res.data.error);
           }
@@ -110,15 +132,16 @@ export default function Home({ users }) {
 
   function update() {
     axios
-      .put("http://103.81.86.16:5000/api/v1/admin/user/" + idUser, {
+      .put("http://103.81.86.16:5000/api/v1/admin/category/update", {
+        _id: idCategory,
         name: name,
-        email: email,
-        role: role,
+        slug: slug,
+        parentId: parentId,
       })
       .then((res) => {
         if (!res.data.error) {
-          setIdUser("");
-          window.location.href = "/admin/user";
+          setIdCategory(null);
+          window.location.href = "/admin/category/";
         } else {
           alert(res.data.error);
         }
@@ -244,10 +267,10 @@ export default function Home({ users }) {
               className="btn btn-primary"
               onClick={() => {
                 setEditModal(true);
-                hanldeEditUser(null);
+                hanldeEditCategory(null);
               }}
             >
-              Add User
+              Add Category
             </button>
             <div className="row">
               <div className="col-md-12">
@@ -265,28 +288,28 @@ export default function Home({ users }) {
                           <tr>
                             <th className="text-center">#</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Slug</th>
+                            <th>ParentId</th>
                             <th className="text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {users.map((user) => (
-                            <tr key={user._id}>
+                          {categories.map((category) => (
+                            <tr key={category._id}>
                               <td className="text-center">1</td>
-                              <td>{user.name}</td>
-                              <td>{user.email}</td>
-                              <td>{user.role}</td>
+                              <td>{category.name}</td>
+                              <td>{category.slug}</td>
+                              <td>{category.parentId}</td>
                               <td className="td-actions text-right">
                                 <button
                                   type="button"
                                   rel="tooltip"
                                   className="btn btn-success"
                                   style={{ marginRight: "5px" }}
-                                  onClick={() => {
-                                    setEditModal(true);
-                                    hanldeEditUser(user._id);
-                                  }}
+                                    onClick={() => {
+                                      setEditModal(true);
+                                      hanldeEditCategory(category._id);
+                                    }}
                                 >
                                   <i className="material-icons">edit</i>
                                 </button>
@@ -295,10 +318,10 @@ export default function Home({ users }) {
                                   rel="tooltip"
                                   className="btn btn-danger"
                                   style={{ marginRight: "5px" }}
-                                  onClick={() => {
-                                    setDeleteModal(true);
-                                    setIdUser(user._id);
-                                  }}
+                                    onClick={() => {
+                                      setDeleteModal(true);
+                                      setIdCategory(category._id);
+                                    }}
                                 >
                                   <i className="material-icons">close</i>
                                 </button>
@@ -314,6 +337,7 @@ export default function Home({ users }) {
             </div>
           </div>
         </div>
+
         <Dialog
           fullWidth={true}
           open={editmodal}
@@ -340,7 +364,7 @@ export default function Home({ users }) {
                 <div className="card-icon">
                   <i className="material-icons">mail_outline</i>
                 </div>
-                <h4 className="card-title">Register Form</h4>
+                <h4 className="card-title">Category Form</h4>
               </div>
               <div className="card-body ">
                 <div className="form-group">
@@ -351,49 +375,44 @@ export default function Home({ users }) {
                     required={true}
                     value={name}
                     onChange={(e) => {
+                      setSlug(sanitizeTitle(e.target.value));
                       setName(e.target.value);
                     }}
                   />
                 </div>
+                <div className="category form-category">* Required fields</div>
+              </div>
+              <div className="card-body ">
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Email Address *</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    required={true}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="bmd-label-floating"> Password *</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="examplePassword"
-                    required={true}
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="bmd-label-floating"> Role *</label>
+                  <label className="bmd-label-floating"> Slug *</label>
                   <input
                     type="text"
                     className="form-control"
                     required={true}
-                    placeholder="Role...."
-                    value={role}
-                    onChange={(e) => {
-                      setRole(e.target.value);
-                    }}
+                    value={slug}
+                    disabled={true}
                   />
                 </div>
                 <div className="category form-category">* Required fields</div>
+              </div>
+              <div className="card-body">
+                <div className="form-group">
+                  <label className="bmd-label-floating" style={{ marginRight: '10px' }}> ParentId *</label>
+                  <select
+                    className="selectpicker"
+                    data-size="7"
+                    data-style="btn btn-primary btn-round"
+                    title="Choose One"
+                    value={parentId}
+                    onChange={(e) => {
+                      setParentId(e.target.value);
+                    }}
+                  >
+                    {categoriesParent.map((parent) => (
+                      <option value={parent._id} key={parent._id}>{parent.name}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div className="card-footer text-right">
                 <button
@@ -401,7 +420,7 @@ export default function Home({ users }) {
                   className="btn btn-rose"
                   onClick={() => submit()}
                 >
-                  Register
+                  Add
                 </button>
               </div>
             </div>
@@ -437,7 +456,7 @@ export default function Home({ users }) {
             <button
               type="button"
               className="btn btn-rose"
-              onClick={() => hanldeDeleteUser()}
+              onClick={() => hanldeDeleteCategory()}
             >
               Yes
             </button>
