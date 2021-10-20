@@ -6,7 +6,7 @@ export default function Sidebar({users}) {
     const [infoUser, setInFoUser] = useState(false);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/v1/admin/me", {
+        axios.get("http://103.81.86.16:5000/api/v1/admin/me", {
             headers: { Authorization: Cookies.get("token") },
           })
             .then((res) => {
@@ -15,7 +15,7 @@ export default function Sidebar({users}) {
     }, []);
 
     function logOut() {
-        axios.get("http://localhost:5000/api/v1/admin/logout/")
+        axios.get("http://103.81.86.16:5000/api/v1/admin/logout/")
             .then((res) => {
                 Cookies.remove("token");
                 localStorage.removeItem('authenticate');
