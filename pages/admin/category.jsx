@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/categories", {
+  const res = await fetch("http://localhost:5000/api/v1/admin/categories", {
     headers: { Authorization: token },
   });
 
-  const parent = await fetch("http://103.81.86.16:5000/api/v1/admin/categories-parent", {
+  const parent = await fetch("http://localhost:5000/api/v1/admin/categories-parent", {
     headers: { Authorization: token },
   });
 
@@ -85,7 +85,7 @@ export default function Category({ categories, categoriesParent }) {
     } else {
       setIdCategory(idCategory);
       axios
-        .get("http://103.81.86.16:5000/api/v1/admin/category/" + idCategory)
+        .get("http://localhost:5000/api/v1/admin/category/" + idCategory)
         .then((res) => {
           setName(res.data.category[0].name);
           setSlug(res.data.category[0].slug);
@@ -96,7 +96,7 @@ export default function Category({ categories, categoriesParent }) {
 
   function hanldeDeleteCategory() {
     axios
-      .delete("http://103.81.86.16:5000/api/v1/admin/category/delete/" + idCategory)
+      .delete("http://localhost:5000/api/v1/admin/category/delete/" + idCategory)
       .then((res) => {
         window.location.href = "/admin/category";
       });
@@ -115,7 +115,7 @@ export default function Category({ categories, categoriesParent }) {
       alert("Please enter fields");
     } else {
       axios
-        .post("http://103.81.86.16:5000/api/v1/admin/category/create", {
+        .post("http://localhost:5000/api/v1/admin/category/create", {
           name: name,
           slug: slug,
           parentId: parentId,
@@ -132,7 +132,7 @@ export default function Category({ categories, categoriesParent }) {
 
   function update() {
     axios
-      .put("http://103.81.86.16:5000/api/v1/admin/category/update", {
+      .put("http://localhost:5000/api/v1/admin/category/update", {
         _id: idCategory,
         name: name,
         slug: slug,

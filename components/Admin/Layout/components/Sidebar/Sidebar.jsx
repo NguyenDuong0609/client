@@ -6,7 +6,7 @@ export default function Sidebar({users}) {
     const [infoUser, setInFoUser] = useState(false);
 
     useEffect(() => {
-        axios.get("http://103.81.86.16:5000/api/v1/admin/me", {
+        axios.get("http://localhost:5000/api/v1/admin/me", {
             headers: { Authorization: Cookies.get("token") },
           })
             .then((res) => {
@@ -15,7 +15,7 @@ export default function Sidebar({users}) {
     }, []);
 
     function logOut() {
-        axios.get("http://103.81.86.16:5000/api/v1/admin/logout/")
+        axios.get("http://localhost:5000/api/v1/admin/logout/")
             .then((res) => {
                 Cookies.remove("token");
                 localStorage.removeItem('authenticate');
@@ -24,7 +24,7 @@ export default function Sidebar({users}) {
     }
 
     return (
-        <div className="sidebar" data-color="rose" data-background-color="black" data-image="../assets/img/sidebar-1.jpg">
+        <div className="sidebar" data-color="rose" data-background-color="black" data-image="http://103.81.86.16:3000/assets/img/sidebar-1.jpg">
             <div className="logo">
                 <a href="http://www.creative-tim.com" className="simple-text logo-mini">CT</a>
                 <a href="http://www.creative-tim.com" className="simple-text logo-normal">Creative Tim</a>
@@ -32,7 +32,7 @@ export default function Sidebar({users}) {
             <div className="sidebar-wrapper">
                 <div className="user">
                     <div className="photo">
-                        <img src="../assets/img/faces/avatar.jpg" />
+                        <img src="http://103.81.86.16:3000/assets/img/faces/avatar.jpg" />
                     </div>
                     <div className="user-info">
                         <a data-toggle="collapse" href="#collapseExample" className="username">
@@ -73,6 +73,12 @@ export default function Sidebar({users}) {
                         <a className="nav-link" href="/admin/category">
                             <i className="material-icons">Category</i>
                             <p> Category </p>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="/admin/blog">
+                            <i className="material-icons">Blog</i>
+                            <p> Blog </p>
                         </a>
                     </li>
                 </ul>

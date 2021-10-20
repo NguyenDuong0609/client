@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
+import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
 import Head from "next/head";
 import Image from "next/image";
-import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
 import Cookies from "js-cookie";
-
-import axios from "axios";
-
-import { makeStyles } from "@material-ui/core/styles";
-import Slide from "@material-ui/core/Slide";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-// @material-ui/icons
+import Slide from "@material-ui/core/Slide";
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -30,101 +28,39 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://localhost:5000/api/v1/admin/users", {
+  const res = await fetch("http://localhost:5000/api/v1/admin/blogs", {
     headers: { Authorization: token },
   });
+
   const data = await res.json();
 
   return {
-    props: { users: data.users },
+    props: { blogs: data.blogs },
   };
 };
 
 /** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
-export default function Home({ users }) {
+export default function Blog({ blogs }) {
   const classes = useStyles();
-  const [editmodal, setEditModal] = useState(false);
   const [deletemodal, setDeleteModal] = useState(false);
+  const [idBlog, setIdBlog] = useState("");
 
-  const [role, setRole] = useState("");
-  const [idUser, setIdUser] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  function submit() {
-    if (idUser === "") {
-      add();
-    } else {
-      update();
-      getStaticProps();
-    }
+  function hanldeEditBlog(idBlog) {
+    window.location.href = "/admin/blog/edit/?id=" + idBlog;
   }
 
-  function hanldeEditUser(idUser) {
-    if (idUser == null) {
-      setName("");
-      setEmail("");
-      setPassword("");
-    } else {
-      setIdUser(idUser);
-      axios
-        .get("http://localhost:5000/api/v1/admin/user/" + idUser)
-        .then((res) => {
-          console.log(res);
-          setName(res.data.user.name);
-          setEmail(res.data.user.email);
-          setRole(res.data.user.role);
-        });
-    }
-  }
-
-  function hanldeDeleteUser() {
+  function hanldeDeleteBlog() {
+    const token = Cookies.get("token");
     axios
-      .delete("http://localhost:5000/api/v1/admin/user/" + idUser)
-      .then((res) => {
-        window.location.href = "/admin/user";
-      });
-  }
-
-  function add() {
-    if (email == "" || password == "" || name == "" || role == "") {
-      alert("Please enter fields");
-    } else {
-      axios
-        .post("http://localhost:5000/api/v1/admin/register", {
-          name: name,
-          email: email,
-          password: password,
-          role: role,
-        })
-        .then((res) => {
-          if (!res.data.error) {
-            window.location.href = "/admin/user";
-          } else {
-            alert(res.data.error);
-          }
-        });
-    }
-  }
-
-  function update() {
-    axios
-      .put("http://localhost:5000/api/v1/admin/user/" + idUser, {
-        name: name,
-        email: email,
-        role: role,
+      .delete("http://localhost:5000/api/v1/admin/blog/" + idBlog, {
+        headers: { Authorization: token },
       })
       .then((res) => {
-        if (!res.data.error) {
-          setIdUser("");
-          window.location.href = "/admin/user";
-        } else {
-          alert(res.data.error);
-        }
+        window.location.href = "/admin/blog";
       });
   }
 
+  var stt = 1;
   return (
     <LayoutAdmin>
       <div className="main-panel">
@@ -242,12 +178,11 @@ export default function Home({ users }) {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => {
-                setEditModal(true);
-                hanldeEditUser(null);
-              }}
+                onClick={() => {
+                  window.location.href = "/admin/blog/create";
+                }}
             >
-              Add User
+              Add Blog
             </button>
             <div className="row">
               <div className="col-md-12">
@@ -264,32 +199,33 @@ export default function Home({ users }) {
                         <thead>
                           <tr>
                             <th className="text-center">#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Slug</th>
+                            <th>Category</th>
+                            <th>User</th>
                             <th className="text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {users.map((user) => (
-                            <tr key={user._id}>
-                              <td className="text-center">1</td>
-                              <td>{user.name}</td>
-                              <td>{user.email}</td>
-                              <td>{user.role}</td>
+                          {blogs.map((blog) => (
+                            <tr key={blog._id}>
+                              <td className="text-center">{stt++}</td>
+                              <td>{blog.title}</td>
+                              <td style={{width: "100px"}}>{ ReactHtmlParser(blog.description) }</td>
+                              <td>{blog.slug}</td>
+                              <td>{blog.category.name}</td>
+                              <td>{blog.user.name}</td>
                               <td className="td-actions text-right">
-                                <button
-                                  type="button"
+                                <a
+                                  href={`/admin/blog/${blog._id}`} 
                                   rel="tooltip"
                                   className="btn btn-success"
-                                  style={{ marginRight: "5px" }}
-                                  onClick={() => {
-                                    setEditModal(true);
-                                    hanldeEditUser(user._id);
-                                  }}
-                                >
-                                  <i className="material-icons">edit</i>
-                                </button>
+                                  style={{ marginRight: "5px", color: "white" }}
+                                    onClick={() => {
+                                      hanldeEditBlog(blog._id);
+                                    }}
+                                ><i className="material-icons">edit</i></a>
                                 <button
                                   type="button"
                                   rel="tooltip"
@@ -297,7 +233,7 @@ export default function Home({ users }) {
                                   style={{ marginRight: "5px" }}
                                   onClick={() => {
                                     setDeleteModal(true);
-                                    setIdUser(user._id);
+                                    setIdBlog(blog._id);
                                   }}
                                 >
                                   <i className="material-icons">close</i>
@@ -314,99 +250,7 @@ export default function Home({ users }) {
             </div>
           </div>
         </div>
-        <Dialog
-          fullWidth={true}
-          open={editmodal}
-          keepMounted
-          onClose={() => setEditModal(false)}
-          aria-labelledby="modal-slide-title"
-          aria-describedby="modal-slide-description"
-          style={{ paddingBottom: "400px", with: "1000px" }}
-        >
-          <DialogTitle id="classic-modal-slide-title" disableTypography>
-            <button
-              type="button"
-              onClick={() => setEditModal(false)}
-              className="close"
-              data-dismiss="modal"
-              aria-hidden="true"
-            >
-              <i className="material-icons">clear</i>
-            </button>
-          </DialogTitle>
-          <form id="RegisterValidation" action="" method="">
-            <div className="card ">
-              <div className="card-header card-header-rose card-header-icon">
-                <div className="card-icon">
-                  <i className="material-icons">mail_outline</i>
-                </div>
-                <h4 className="card-title">Register Form</h4>
-              </div>
-              <div className="card-body ">
-                <div className="form-group">
-                  <label className="bmd-label-floating"> Name *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    required={true}
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="bmd-label-floating"> Email Address *</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    required={true}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="bmd-label-floating"> Password *</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="examplePassword"
-                    required={true}
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="bmd-label-floating"> Role *</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    required={true}
-                    placeholder="Role...."
-                    value={role}
-                    onChange={(e) => {
-                      setRole(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="category form-category">* Required fields</div>
-              </div>
-              <div className="card-footer text-right">
-                <button
-                  type="button"
-                  className="btn btn-rose"
-                  onClick={() => submit()}
-                >
-                  Register
-                </button>
-              </div>
-            </div>
-          </form>
-        </Dialog>
+
         <Dialog
           fullWidth={true}
           open={deletemodal}
@@ -437,7 +281,7 @@ export default function Home({ users }) {
             <button
               type="button"
               className="btn btn-rose"
-              onClick={() => hanldeDeleteUser()}
+              onClick={() => hanldeDeleteBlog()}
             >
               Yes
             </button>

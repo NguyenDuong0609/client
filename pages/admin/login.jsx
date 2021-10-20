@@ -16,7 +16,7 @@ export default function Home({ req, res }) {
       if(email == null || password == null) {
         alert('Please login');
       } else {
-        axios.post("http://103.81.86.16:5000/api/v1/admin/login", { email: email, password: password })
+        axios.post("http://localhost:5000/api/v1/admin/login", { email: email, password: password })
         .then((res) => {
           if(!res.data.error) {
             localStorage.setItem('authenticate', true);
