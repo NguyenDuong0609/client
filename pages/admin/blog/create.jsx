@@ -114,7 +114,7 @@ export default function BlogCreate({ categories }) {
           if (!res.data.error) {
             window.location.href = "/admin/blog";
           } else {
-            alert(res.data.error);
+            alert("check field title");
           }
         }).catch(err => alert("Image < 90kb or limit field"));
     }
