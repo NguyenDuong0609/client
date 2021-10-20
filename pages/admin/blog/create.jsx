@@ -34,7 +34,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://localhost:5000/api/v1/admin/categories", {
+  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/categories", {
     headers: { Authorization: token },
   });
 
@@ -98,7 +98,7 @@ export default function BlogCreate({ categories }) {
       const token = Cookies.get("token");
       axios
         .post(
-          "http://localhost:5000/api/v1/admin/blog",
+          "http://103.81.86.16:5000/api/v1/admin/blog",
           {
             title: title,
             slug: slug,

@@ -41,10 +41,10 @@ export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
   const { params } = context;
   const { id } = params;
-  const res = await fetch("http://localhost:5000/api/v1/admin/blog/" + id, {
+  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/blog/" + id, {
     headers: { Authorization: token },
   });
-  const res_sub = await fetch("http://localhost:5000/api/v1/admin/categories", {
+  const res_sub = await fetch("http://103.81.86.16:5000/api/v1/admin/categories", {
     headers: { Authorization: token },
   });
 
@@ -92,7 +92,7 @@ export default function Edit({ blog, categories }) {
     const token = Cookies.get("token");
     axios
       .put(
-        "http://localhost:5000/api/v1/admin/blog/" + idBlog,
+        "http://103.81.86.16:5000/api/v1/admin/blog/" + idBlog,
         {
           title: title,
           slug: slug,

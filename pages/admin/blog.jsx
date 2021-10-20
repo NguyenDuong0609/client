@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://localhost:5000/api/v1/admin/blogs", {
+  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/blogs", {
     headers: { Authorization: token },
   });
 
@@ -52,7 +52,7 @@ export default function Blog({ blogs }) {
   function hanldeDeleteBlog() {
     const token = Cookies.get("token");
     axios
-      .delete("http://localhost:5000/api/v1/admin/blog/" + idBlog, {
+      .delete("http://103.81.86.16:5000/api/v1/admin/blog/" + idBlog, {
         headers: { Authorization: token },
       })
       .then((res) => {
