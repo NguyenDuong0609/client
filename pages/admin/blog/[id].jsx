@@ -16,6 +16,10 @@ import ReactHtmlParser, {
   htmlparser2,
 } from "react-html-parser";
 
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
+
 import dynamic from "next/dynamic";
 import "suneditor/dist/css/suneditor.min.css";
 
@@ -41,10 +45,10 @@ export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
   const { params } = context;
   const { id } = params;
-  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/blog/" + id, {
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/blog/` + id, {
     headers: { Authorization: token },
   });
-  const res_sub = await fetch("http://103.81.86.16:5000/api/v1/admin/categories", {
+  const res_sub = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
     headers: { Authorization: token },
   });
 
@@ -80,6 +84,28 @@ export default function Edit({ blog, categories }) {
     setSelectedCategory(blog[0].category);
   }, []);
 
+  function sanitizeTitle(title) {
+    var slug = "";
+    // Change to lower case
+    var titleLower = title.toLowerCase();
+    // Letter "e"
+    slug = titleLower.replace(/e|é|è|ẽ|ẻ|ẹ|ê|ế|ề|ễ|ể|ệ/gi, "e");
+    // Letter "a"
+    slug = slug.replace(/a|á|à|ã|ả|ạ|ă|ắ|ằ|ẵ|ẳ|ặ|â|ấ|ầ|ẫ|ẩ|ậ/gi, "a");
+    // Letter "o"
+    slug = slug.replace(/o|ó|ò|õ|ỏ|ọ|ô|ố|ồ|ỗ|ổ|ộ|ơ|ớ|ờ|ỡ|ở|ợ/gi, "o");
+    // Letter "u"
+    slug = slug.replace(/u|ú|ù|ũ|ủ|ụ|ư|ứ|ừ|ữ|ử|ự/gi, "u");
+    // Letter "d"
+    slug = slug.replace(/đ/gi, "d");
+    // Trim the last whitespace
+    slug = slug.replace(/\s*$/g, "");
+    // Change whitespace to "-"
+    slug = slug.replace(/\s+/g, "-");
+
+    return slug;
+  }
+
   const handleDescriptionChange = (content) => {
     setDescription(content);
   };
@@ -92,7 +118,7 @@ export default function Edit({ blog, categories }) {
     const token = Cookies.get("token");
     axios
       .put(
-        "http://103.81.86.16:5000/api/v1/admin/blog/" + idBlog,
+        process.env.API_URL + "/api/v1/admin/blog/" + idBlog,
         {
           title: title,
           slug: slug,

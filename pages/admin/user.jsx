@@ -5,6 +5,9 @@ import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
 import Cookies from "js-cookie";
 
 import axios from "axios";
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 import { makeStyles } from "@material-ui/core/styles";
 import Slide from "@material-ui/core/Slide";
@@ -30,10 +33,18 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://localhost:5000/api/v1/admin/users", {
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/users`, {
     headers: { Authorization: token },
   });
   const data = await res.json();
+  if(data.error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/admin/dashboard"
+      }
+    }
+  }
 
   return {
     props: { users: data.users },
@@ -57,7 +68,6 @@ export default function Home({ users }) {
       add();
     } else {
       update();
-      getStaticProps();
     }
   }
 
@@ -69,7 +79,7 @@ export default function Home({ users }) {
     } else {
       setIdUser(idUser);
       axios
-        .get("http://localhost:5000/api/v1/admin/user/" + idUser)
+        .get(process.env.API_URL + "/api/v1/admin/user/" + idUser)
         .then((res) => {
           console.log(res);
           setName(res.data.user.name);
@@ -80,8 +90,11 @@ export default function Home({ users }) {
   }
 
   function hanldeDeleteUser() {
+    const token = Cookies.get("token");
     axios
-      .delete("http://localhost:5000/api/v1/admin/user/" + idUser)
+      .delete(process.env.API_URL + "/api/v1/admin/user/" + idUser, {
+        headers: { Authorization: token },
+      })
       .then((res) => {
         window.location.href = "/admin/user";
       });
@@ -92,7 +105,7 @@ export default function Home({ users }) {
       alert("Please enter fields");
     } else {
       axios
-        .post("http://localhost:5000/api/v1/admin/register", {
+        .post(process.env.API_URL + "/api/v1/admin/register", {
           name: name,
           email: email,
           password: password,
@@ -110,7 +123,7 @@ export default function Home({ users }) {
 
   function update() {
     axios
-      .put("http://localhost:5000/api/v1/admin/user/" + idUser, {
+      .put(process.env.API_URL + "/api/v1/admin/user/" + idUser, {
         name: name,
         email: email,
         role: role,
@@ -124,7 +137,7 @@ export default function Home({ users }) {
         }
       });
   }
-
+  var stt = 1;
   return (
     <LayoutAdmin>
       <div className="main-panel">
@@ -273,7 +286,7 @@ export default function Home({ users }) {
                         <tbody>
                           {users.map((user) => (
                             <tr key={user._id}>
-                              <td className="text-center">1</td>
+                              <td className="text-center">{stt++}</td>
                               <td>{user.name}</td>
                               <td>{user.email}</td>
                               <td>{user.role}</td>
@@ -344,7 +357,7 @@ export default function Home({ users }) {
               </div>
               <div className="card-body ">
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Name *</label>
+                  <label> Name *</label>
                   <input
                     type="text"
                     className="form-control"
@@ -356,7 +369,7 @@ export default function Home({ users }) {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Email Address *</label>
+                  <label> Email Address *</label>
                   <input
                     type="email"
                     className="form-control"
@@ -368,7 +381,7 @@ export default function Home({ users }) {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Password *</label>
+                  <label> Password *</label>
                   <input
                     type="password"
                     className="form-control"
@@ -381,19 +394,17 @@ export default function Home({ users }) {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Role *</label>
+                  <label> Role *</label>
                   <input
                     type="text"
                     className="form-control"
                     required={true}
-                    placeholder="Role...."
                     value={role}
                     onChange={(e) => {
                       setRole(e.target.value);
                     }}
                   />
                 </div>
-                <div className="category form-category">* Required fields</div>
               </div>
               <div className="card-footer text-right">
                 <button

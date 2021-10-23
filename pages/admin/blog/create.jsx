@@ -10,6 +10,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 import dynamic from "next/dynamic";
 import "suneditor/dist/css/suneditor.min.css";
@@ -34,7 +37,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/categories", {
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
     headers: { Authorization: token },
   });
 
@@ -98,7 +101,7 @@ export default function BlogCreate({ categories }) {
       const token = Cookies.get("token");
       axios
         .post(
-          "http://103.81.86.16:5000/api/v1/admin/blog",
+          process.env.API_URL + "/api/v1/admin/blog",
           {
             title: title,
             slug: slug,
@@ -241,7 +244,7 @@ export default function BlogCreate({ categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Stacked Form</h4>
+                      <h4 className="card-title">Create Blog Form</h4>
                     </div>
                     <div className="card-body ">
                       <div className="form-group">

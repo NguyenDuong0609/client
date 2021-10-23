@@ -10,6 +10,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -27,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://localhost:5000/api/v1/admin/categories", {
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
     headers: { Authorization: token },
   });
 
-  const parent = await fetch("http://localhost:5000/api/v1/admin/categories-parent", {
+  const parent = await fetch(`${process.env.API_URL}/api/v1/admin/categories-parent`, {
     headers: { Authorization: token },
   });
 
@@ -85,7 +88,7 @@ export default function Category({ categories, categoriesParent }) {
     } else {
       setIdCategory(idCategory);
       axios
-        .get("http://localhost:5000/api/v1/admin/category/" + idCategory)
+        .get(process.env.API_URL + "/api/v1/admin/category/" + idCategory)
         .then((res) => {
           setName(res.data.category[0].name);
           setSlug(res.data.category[0].slug);
@@ -96,7 +99,7 @@ export default function Category({ categories, categoriesParent }) {
 
   function hanldeDeleteCategory() {
     axios
-      .delete("http://localhost:5000/api/v1/admin/category/delete/" + idCategory)
+      .delete(process.env.API_URL + "/api/v1/admin/category/delete/" + idCategory)
       .then((res) => {
         window.location.href = "/admin/category";
       });
@@ -115,7 +118,7 @@ export default function Category({ categories, categoriesParent }) {
       alert("Please enter fields");
     } else {
       axios
-        .post("http://localhost:5000/api/v1/admin/category/create", {
+        .post(process.env.API_URL + "/api/v1/admin/category/create", {
           name: name,
           slug: slug,
           parentId: parentId,
@@ -132,7 +135,7 @@ export default function Category({ categories, categoriesParent }) {
 
   function update() {
     axios
-      .put("http://localhost:5000/api/v1/admin/category/update", {
+      .put(process.env.API_URL + "/api/v1/admin/category/update", {
         _id: idCategory,
         name: name,
         slug: slug,
@@ -368,7 +371,7 @@ export default function Category({ categories, categoriesParent }) {
               </div>
               <div className="card-body ">
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Name *</label>
+                  <label> Name *</label>
                   <input
                     type="text"
                     className="form-control"
@@ -384,7 +387,7 @@ export default function Category({ categories, categoriesParent }) {
               </div>
               <div className="card-body ">
                 <div className="form-group">
-                  <label className="bmd-label-floating"> Slug *</label>
+                  <label> Slug *</label>
                   <input
                     type="text"
                     className="form-control"
@@ -397,7 +400,7 @@ export default function Category({ categories, categoriesParent }) {
               </div>
               <div className="card-body">
                 <div className="form-group">
-                  <label className="bmd-label-floating" style={{ marginRight: '10px' }}> ParentId *</label>
+                  <label style={{ marginRight: '10px' }}> ParentId *</label>
                   <select
                     className="selectpicker"
                     data-size="7"

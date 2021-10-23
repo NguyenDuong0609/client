@@ -11,6 +11,9 @@ import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import getConfig from 'next/config';
+
+const { serverRuntimeConfig } = getConfig();
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -28,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
-  const res = await fetch("http://103.81.86.16:5000/api/v1/admin/blogs", {
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/blogs`, {
     headers: { Authorization: token },
   });
 
@@ -52,7 +55,7 @@ export default function Blog({ blogs }) {
   function hanldeDeleteBlog() {
     const token = Cookies.get("token");
     axios
-      .delete("http://103.81.86.16:5000/api/v1/admin/blog/" + idBlog, {
+      .delete(process.env.API_URL + "/api/v1/admin/blog/" + idBlog, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -191,7 +194,7 @@ export default function Blog({ blogs }) {
                     <div className="card-icon">
                       <i className="material-icons">assignment</i>
                     </div>
-                    <h4 className="card-title">Simple Table</h4>
+                    <h4 className="card-title">Blog List</h4>
                   </div>
                   <div className="card-body">
                     <div className="table-responsive">
