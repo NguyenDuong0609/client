@@ -10,12 +10,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
-// import getConfig from 'next/config';
+import getConfig from "next/config";
 
-// const { serverRuntimeConfig } = getConfig();
+const { serverRuntimeConfig } = getConfig();
 
-// import dynamic from "next/dynamic";
-// import "suneditor/dist/css/suneditor.min.css";
+import dynamic from "next/dynamic";
+import "suneditor/dist/css/suneditor.min.css";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const SunEditor = dynamic(() => import("suneditor-react"), {
-//   ssr: false,
-// });
+const SunEditor = dynamic(() => import("suneditor-react"), {
+  ssr: true,
+});
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
@@ -273,7 +273,7 @@ export default function BlogCreate({ categories }) {
                       <label htmlFor="" className="bmd-label-floating">
                         Description
                       </label>
-                      {/* <SunEditor
+                      <SunEditor
                         // setContents="My contents"
                         showToolbar={true}
                         onChange={handleDescriptionChange}
@@ -294,11 +294,11 @@ export default function BlogCreate({ categories }) {
                             ],
                           ],
                         }}
-                      /> */}
+                      />
                       <label htmlFor="" className="bmd-label-floating">
                         Content
                       </label>
-                      {/* <SunEditor
+                      <SunEditor
                         // setContents="My contents"
                         showToolbar={true}
                         onChange={handleContentChange}
@@ -319,7 +319,7 @@ export default function BlogCreate({ categories }) {
                             ],
                           ],
                         }}
-                      /> */}
+                      />
                     </div>
                     <div className="card-footer ">
                       <button
