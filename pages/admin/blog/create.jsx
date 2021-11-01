@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
-  ssr: true,
+  ssr: false,
 });
 
 export const getServerSideProps = async (context) => {

@@ -132,7 +132,9 @@ const LayoutAdmin = ({ children }) => {
         src={process.env.BASE_URL + "/assets/js/plugins/fullcalendar.min.js"}
       ></script>
       {/* Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ */}
-      {/* <script src={process.env.BASE_URL + "/assets/js/plugins/jquery-jvectormap.js"}></script> */}
+      <script
+        src={process.env.BASE_URL + "/assets/js/plugins/jquery-jvectormap.js"}
+      ></script>
       {/* Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ */}
       <script
         src={process.env.BASE_URL + "/assets/js/plugins/nouislider.min.js"}
