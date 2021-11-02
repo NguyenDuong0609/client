@@ -27,7 +27,7 @@ const porfolio = () => {
                         <li><a href="#about" className="menu-btn">About</a></li>
                         <li><a href="#services" className="menu-btn">Services</a></li>
                         <li><a href="#skills" className="menu-btn">Skills</a></li>
-                        <li><a href="#teams" className="menu-btn">Teams</a></li>
+                        {/* <li><a href="#teams" className="menu-btn">Teams</a></li> */}
                         <li><a href="#contact" className="menu-btn">Contact</a></li>
                     </ul>
                     <div className="menu-btn">
@@ -42,7 +42,7 @@ const porfolio = () => {
                         <div className="text-1">Hello, my name</div>
                         <div className="text-2">Nguyễn Dương</div>
                         <div className="text-3">And I'm a <span className="typing"></span></div>
-                        <a href="#">Hire me</a>
+                        {/* <a href="#contact">Hire me</a> */}
                     </div>
                 </div>
             </section>
@@ -52,13 +52,18 @@ const porfolio = () => {
                     <h2 className="title">About me</h2>
                     <div className="about-content">
                         <div className="column left">
-                            <img src="porfolio/images/profile-1.jpeg" alt=""/>
+                            <img src="porfolio/images/profile.jpg" alt=""/>
                         </div>
                         <div className="column right">
                             <div className="text">I'm Nguyễn Dương <span className="typing-2"></span></div>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium animi sapiente vitae. Eaque eius neque tempora saepe debitis, reprehenderit adipisci asperiores, eveniet vitae quam pariatur, recusandae quod quia commodi soluta
-                                quaerat praesentium! Quasi odit rem obcaecati alias dolor expedita accusamus aut ad asperiores non cumque vitae ex perferendis, maiores et itaque voluptatum ab eveniet distinctio eaque molestias quod fugiat excepturi!</p>
-                            <a href="#">Download CV</a>
+                            <p>
+                                I am a software developer, I like working on the backend-end of the web and mobile app.<br/>
+
+                                I love creating, whether those things are web applications, Mobile Ecommerce Apps. I always like learning new things. I often write about my findings on my blog.<br/>
+
+                                This is my site, nguyenduongdev, I'm glad you're here!
+                            </p>
+                            {/* <a href="#">Download CV</a> */}
                         </div>
                     </div>
                 </div>
@@ -70,23 +75,32 @@ const porfolio = () => {
                     <div className="serv-content">
                         <div className="card">
                             <div className="box">
-                                <i className="fas fa-paint-brush"></i>
-                                <div className="text">Web Design</div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsam porro corporis nemo, quod necessitatibus!</p>
+                                <i className="fas fa-atom"></i>
+                                <div className="text">Backend Apps</div>
+                                <p>
+                                    Build scalable and maintainable server applications using modern
+                                    technology stacks such as Node.js, Express, and MongoDB
+                                </p>
                             </div>
                         </div>
                         <div className="card">
                             <div className="box">
                                 <i className="fas fa-chart-line"></i>
-                                <div className="text">Advertising</div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsam porro corporis nemo, quod necessitatibus!</p>
+                                <div className="text">Ongoing Support</div>
+                                <p>
+                                    Your website is always growing. Whether you’re adding new features or making improvements I’m here to help. 
+                                    I won’t leave you guessing how your own website works and will always be available to answer any questions you might have.
+                                </p>
                             </div>
                         </div>
                         <div className="card">
                             <div className="box">
-                                <i className="fas fa-code"></i>
-                                <div className="text">Apps Design</div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ipsam porro corporis nemo, quod necessitatibus!</p>
+                                <i className="fas fa-mobile"></i>
+                                <div className="text">Native Apps</div>
+                                <p>
+                                    Use Flutter for building simple native mobile applications. Flutter is
+                                    modern, fast, cross-platform, and popular.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -97,44 +111,48 @@ const porfolio = () => {
                 <div className="max-width">
                     <h2 className="title">My skills</h2>
                     <div className="skills-content">
-                        <div className="column left">
+                        <div className="column left" style={{ marginBottom: '100px' }}>
                             <div className="text">My creative skill & experiences.</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quas totam repellendus, distinctio saepe tempora ea quae eum expedita odio repellat esse molestiae fugiat harum veniam nisi unde quidem itaque voluptatum consequatur
-                                sit? Minima atque quas eos aperiam ducimus debitis corporis impedit perferendis nam, accusantium doloremque ex recusandae voluptas suscipit fuga esse sint qui quos velit assumenda culpa dolor magnam.</p>
-                            <a href="#">Read more</a>
+                            <p>
+                                I’m familiar with technologies such as:<br/>
+                                    - Node/JavaScript, Laravel as the main backend solution.<br/>
+                                    - Flutter for mobile development.<br/>
+                                    - MySQL or Mongo as databases.<br/>
+                            </p>
+                            {/* <a href="#">Read more</a> */}
                         </div>
                         <div className="column right">
                             <div className="bars">
                                 <div className="info">
-                                    <span>HTML</span>
-                                    <span>90%</span>
+                                    <span>HTML, CSS, Javascript</span>
+                                    <span>60%</span>
                                 </div>
                                 <div className="line html"></div>
                             </div>
                             <div className="bars">
                                 <div className="info">
-                                    <span>CSS</span>
-                                    <span>60%</span>
-                                </div>
-                                <div className="line css"></div>
-                            </div>
-                            <div className="bars">
-                                <div className="info">
-                                    <span>Javascript</span>
+                                    <span>Laravel</span>
                                     <span>80%</span>
                                 </div>
-                                <div className="line js"></div>
+                                <div className="line laravel"></div>
                             </div>
                             <div className="bars">
                                 <div className="info">
-                                    <span>PHP</span>
+                                    <span>Nodejs</span>
                                     <span>50%</span>
                                 </div>
-                                <div className="line php"></div>
+                                <div className="line nodejs"></div>
                             </div>
                             <div className="bars">
                                 <div className="info">
-                                    <span>MySQL</span>
+                                    <span>Flutter</span>
+                                    <span>20%</span>
+                                </div>
+                                <div className="line flutter"></div>
+                            </div>
+                            <div className="bars">
+                                <div className="info">
+                                    <span>MySQL, Mongo</span>
                                     <span>70%</span>
                                 </div>
                                 <div className="line mysql"></div>
@@ -144,7 +162,7 @@ const porfolio = () => {
                 </div>
             </section>
 
-            <section className="teams" id="teams">
+            {/* <section className="teams" id="teams">
                 <div className="max-width">
                     <h2 className="title">My teams</h2>
                     <div className="carousel owl-carousel">
@@ -185,15 +203,17 @@ const porfolio = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-
+            </section> */}
+            <div style={{height: '1px', color: '#111', width: '400px', border: '1px double', margin: 'auto'}}></div>
             <section className="contact" id="contact">
                 <div className="max-width">
                     <h2 className="title">Contact me</h2>
                     <div className="contact-content">
                         <div className="column left">
                             <div className="text">Get in Touch</div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos, rem.</p>
+                            <p>
+                                I am available to work on your projects and bring your ideas to life. I am just a click away.
+                            </p>
                             <div className="icons">
                                 <div className="row">
                                     <i className="fas fa-user"></i>
@@ -206,7 +226,7 @@ const porfolio = () => {
                                     <i className="fas fa-map-marker-alt"></i>
                                     <div className="info">
                                         <div className="head">Address</div>
-                                        <div className="sub-title">Hoc Mon, HCM</div>
+                                        <div className="sub-title">HCM city</div>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -247,7 +267,7 @@ const porfolio = () => {
             </section>
 
             <footer>
-                <span>Created By <a href="#">Coding Nepal</a> | <span className="far fa-copyright"> 2020 All rights reserved.</span></span>
+                <span>Created By <a href="#">Coding Nguyen Duong</a> | <span className="far fa-copyright"> 2021 All rights reserved.</span></span>
             </footer>
            <script src="porfolio/js/script.js"></script>
         </div>
