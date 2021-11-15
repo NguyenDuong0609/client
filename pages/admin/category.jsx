@@ -30,6 +30,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const getServerSideProps = async (context) => {
   const token = context.req.cookies.token;
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
+      },
+    }
+  }
   const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
     headers: { Authorization: token },
   });

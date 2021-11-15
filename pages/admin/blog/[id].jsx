@@ -43,6 +43,14 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
+      },
+    }
+  }
   const { params } = context;
   const { id } = params;
   const res = await fetch(`${process.env.API_URL}/api/v1/admin/blog/` + id, {

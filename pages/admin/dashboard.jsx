@@ -3,7 +3,19 @@ import Image from "next/image";
 import LayoutAdmin from "../../components/Admin/Layout/LayoutAdmin";
 import Cookies from "js-cookie";
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  const token = context.req.cookies.token;
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
+      },
+    }
+  }
+}
+/** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
+export default function Home(props) {
   return (
     <LayoutAdmin>
         <div className="main-panel">
