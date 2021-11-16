@@ -5,7 +5,7 @@ export default function Sidebar(props) {
 
   return (
     <div className="col-lg-4 sidebar">
-      <div className="single-widget search-widget">
+      {/* <div className="single-widget search-widget">
         <div className="input-group">
           <input
             className="form-control border-secondary py-2"
@@ -18,7 +18,7 @@ export default function Sidebar(props) {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="single-widget category-widget">
         <h2>Category</h2>
         <ul>
@@ -32,7 +32,7 @@ export default function Sidebar(props) {
           ))}
         </ul>
       </div>
-      <div className="single-widget tag-widget">
+      {/* <div className="single-widget tag-widget">
         <h2>Tag</h2>
         <ul className="tags">
           <li>
@@ -54,7 +54,7 @@ export default function Sidebar(props) {
             <a href="archive.html">Wordpress</a>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 }

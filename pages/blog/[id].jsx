@@ -139,7 +139,7 @@ export default function Detail({ categories, blog }) {
                   <div className="blog-details">
                     {ReactHtmlParser(item.content)}
                   </div>
-                  <div className="bottom-tags">
+                  {/* <div className="bottom-tags">
                     <ul>
                       <li>
                         <a href="#">Design</a>
@@ -154,7 +154,7 @@ export default function Detail({ categories, blog }) {
                         <a href="#">Marketing</a>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                   <div className="nxt-prev d-flex justify-content-between">
                     <a href="#" className="primary-btn black-btn">
                       &lt; Previous post{" "}

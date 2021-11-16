@@ -16,7 +16,7 @@ import ReactHtmlParser, {
   htmlparser2,
 } from "react-html-parser";
 
-import getConfig from 'next/config';
+import getConfig from "next/config";
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -43,22 +43,25 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
-  if(!token) {
+  if (!token) {
     return {
       redirect: {
-        destination: '/admin/login',
+        destination: "/admin/login",
         permanent: false,
       },
-    }
+    };
   }
   const { params } = context;
   const { id } = params;
   const res = await fetch(`${process.env.API_URL}/api/v1/admin/blog/` + id, {
     headers: { Authorization: token },
   });
-  const res_sub = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
-    headers: { Authorization: token },
-  });
+  const res_sub = await fetch(
+    `${process.env.API_URL}/api/v1/admin/categories`,
+    {
+      headers: { Authorization: token },
+    }
+  );
 
   const data = await res.json();
 
@@ -293,57 +296,57 @@ export default function Edit({ blog, categories }) {
                         />
                       </div>
                       <label htmlFor="" className="bmd-label-floating">
-                          Description
-                        </label>
-                        <SunEditor
-                          // setContents="My contents"
-                          showToolbar={true}
-                          onChange={handleDescriptionChange}
-                          defaultValue={description}
-                          setDefaultStyle="height: auto"
-                          setOptions={{
-                            buttonList: [
-                              [
-                                "bold",
-                                "underline",
-                                "italic",
-                                "strike",
-                                "list",
-                                "align",
-                                "fontSize",
-                                "formatBlock",
-                                "table",
-                                "image",
-                              ],
+                        Description
+                      </label>
+                      <SunEditor
+                        // setContents="My contents"
+                        showToolbar={true}
+                        onChange={handleDescriptionChange}
+                        defaultValue={description}
+                        setDefaultStyle="height: auto"
+                        setOptions={{
+                          buttonList: [
+                            [
+                              "bold",
+                              "underline",
+                              "italic",
+                              "strike",
+                              "list",
+                              "align",
+                              "fontSize",
+                              "formatBlock",
+                              "table",
+                              "image",
                             ],
-                          }}
-                        />
+                          ],
+                        }}
+                      />
                       <label htmlFor="" className="bmd-label-floating">
-                          Content
-                        </label>
-                        <SunEditor
-                          // setContents="My contents"
-                          showToolbar={true}
-                          onChange={handleContentChange}
-                          defaultValue={content}
-                          setDefaultStyle="height: 300px"
-                          setOptions={{
-                            buttonList: [
-                              [
-                                "bold",
-                                "underline",
-                                "italic",
-                                "strike",
-                                "list",
-                                "align",
-                                "fontSize",
-                                "formatBlock",
-                                "table",
-                                "image",
-                              ],
+                        Content
+                      </label>
+                      <SunEditor
+                        // setContents="My contents"
+                        showToolbar={true}
+                        onChange={handleContentChange}
+                        defaultValue={content}
+                        setDefaultStyle="height: 300px"
+                        setOptions={{
+                          buttonList: [
+                            [
+                              "bold",
+                              "underline",
+                              "italic",
+                              "strike",
+                              "list",
+                              "align",
+                              "fontSize",
+                              "formatBlock",
+                              "table",
+                              "image",
                             ],
-                          }}
-                        />
+                          ],
+                        }}
+                      />
                     </div>
                     <div className="card-footer ">
                       <button
@@ -362,7 +365,7 @@ export default function Edit({ blog, categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Customisable Select</h4>
+                      <h4 className="card-title">Select Option</h4>
                     </div>
                     <div className="card-body">
                       <select
@@ -380,6 +383,40 @@ export default function Edit({ blog, categories }) {
                             {category.name}
                           </option>
                         ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="card">
+                    <div className="card-header card-header-rose card-header-icon">
+                      <div className="card-icon">
+                        <i className="material-icons">mail_outline</i>
+                      </div>
+                      <h4 className="card-title">Customisable Select</h4>
+                    </div>
+                    <div className="card-body">
+                      <label className="title">Tags</label>
+                      <input type="text" value="Amsterdam,Washington,Sydney,Beijing" className="form-control tagsinput" data-role="tagsinput" data-color="info"/><br/>
+                      <h4 className="title">Choose Tags</h4>
+                      <select className="selectpicker" data-style="select-with-transition" multiple title="Choose City" data-size="7">
+                            <option disabled> Multiple Options</option>
+                            <option value="2">Paris </option>
+                            <option value="3">Bucharest</option>
+                            <option value="4">Rome</option>
+                            <option value="5">New York</option>
+                            <option value="6">Miami </option>
+                            <option value="7">Piatra Neamt</option>
+                            <option value="8">Paris </option>
+                            <option value="9">Bucharest</option>
+                            <option value="10">Rome</option>
+                            <option value="11">New York</option>
+                            <option value="12">Miami </option>
+                            <option value="13">Piatra Neamt</option>
+                            <option value="14">Paris </option>
+                            <option value="15">Bucharest</option>
+                            <option value="16">Rome</option>
+                            <option value="17">New York</option>
+                            <option value="18">Miami </option>
+                            <option value="19">Piatra Neamt</option>
                       </select>
                     </div>
                   </div>
