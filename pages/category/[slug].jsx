@@ -69,14 +69,14 @@ export default function Index({ categories, blogs }) {
                     <ul id="nav">
                       <li>
                         <a href="#">Pages</a>
-                        <ul className="dropdown">
+                        {/* <ul className="dropdown">
                           <li>
                             <a href="category.html">Category</a>
                           </li>
                           <li>
                             <a href="archive.html">Archive</a>
                           </li>
-                        </ul>
+                        </ul> */}
                       </li>
                       <li>
                         <a href="#about-section">About</a>
