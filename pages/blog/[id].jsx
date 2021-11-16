@@ -100,6 +100,8 @@ export default function Detail({ categories, blog }) {
                 <span>/</span> */}
                 <a href="/blog">Home</a>
                 <span>/</span>
+                <a href={"/category/" + blog[0].category.slug}>{blog[0].category.name}</a>
+                <span>/</span>
                 <a href={"/blog/" + blog[0].slug}>{blog[0].slug}</a>
               </p>
             </div>
