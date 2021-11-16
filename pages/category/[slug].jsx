@@ -68,20 +68,6 @@ export default function Index({ categories, blogs }) {
                   <div className="dopenav">
                     <ul id="nav">
                       <li>
-                        <a href="#">Home</a>
-                        <ul className="dropdown">
-                          <li>
-                            <a href="index.html">Home One - Agency</a>
-                          </li>
-                          <li>
-                            <a href="index2.html">Home Two - App</a>
-                          </li>
-                          <li>
-                            <a href="index3.html">Home Three - Event</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
                         <a href="#">Pages</a>
                         <ul className="dropdown">
                           <li>
@@ -90,73 +76,10 @@ export default function Index({ categories, blogs }) {
                           <li>
                             <a href="archive.html">Archive</a>
                           </li>
-                          <li>
-                            <a href="single-work.html">Single Work</a>
-                          </li>
-                          <li>
-                            <a href="404.html">404</a>
-                          </li>
-                          <li>
-                            <a href="#">Blog</a>
-                            <ul className="dropdown">
-                              <li>
-                                <a href="blog.html">Blog List</a>
-                              </li>
-                              <li>
-                                <a href="single-blog.html">Blog Single</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a href="#">Dropdown</a>
-                            <ul className="dropdown">
-                              <li>
-                                <a href="#">Dropdown Item</a>
-                              </li>
-                              <li>
-                                <a href="#">Dropdown Item</a>
-                                <ul className="dropdown">
-                                  <li>
-                                    <a href="#">Even Dropdown</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">Even Dropdown</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">Even Dropdown</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">Even Dropdown</a>
-                                  </li>
-                                </ul>
-                              </li>
-                              <li>
-                                <a href="#">Dropdown Item</a>
-                              </li>
-                              <li>
-                                <a href="#">Dropdown Item</a>
-                              </li>
-                            </ul>
-                          </li>
                         </ul>
                       </li>
                       <li>
                         <a href="#about-section">About</a>
-                      </li>
-                      <li>
-                        <a href="#service-section">Service</a>
-                      </li>
-                      <li>
-                        <a href="#work-section">Work</a>
-                      </li>
-                      <li>
-                        <a href="#team-section">Team</a>
-                      </li>
-                      <li>
-                        <a href="#blog-section">Blog</a>
-                      </li>
-                      <li>
-                        <a href="#contact-section">Contact</a>
                       </li>
                     </ul>
                   </div>
