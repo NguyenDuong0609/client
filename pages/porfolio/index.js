@@ -27,7 +27,7 @@ const porfolio = () => {
                         <li><a href="#about" className="menu-btn">About</a></li>
                         <li><a href="#services" className="menu-btn">Services</a></li>
                         <li><a href="#skills" className="menu-btn">Skills</a></li>
-                        {/* <li><a href="#teams" className="menu-btn">Teams</a></li> */}
+                        <li><a href="/blog" className="menu-btn">Blog</a></li>
                         <li><a href="#contact" className="menu-btn">Contact</a></li>
                     </ul>
                     <div className="menu-btn">
@@ -258,7 +258,7 @@ const porfolio = () => {
                                     <textarea name="" id="" cols="30" rows="10" placeholder="Describle project.." required></textarea>
                                 </div>
                                 <div className="button">
-                                    <button type="submit">Send message</button>
+                                    <button type="button">Send message</button>
                                 </div>
                             </form>
                         </div>

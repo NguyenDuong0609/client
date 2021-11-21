@@ -66,7 +66,7 @@ export default function Detail({ categories, blog }) {
                   <div className="dopenav">
                     <ul id="nav">
                       <li>
-                        <a href="#">Pages</a>
+                        <a href="/blog">Pages</a>
                         {/* <ul className="dropdown">
                           <li>
                             <a href="category.html">Category</a>
@@ -77,7 +77,7 @@ export default function Detail({ categories, blog }) {
                         </ul> */}
                       </li>
                       <li>
-                        <a href="#about-section">About</a>
+                        <a href="/porfolio">Porfolio</a>
                       </li>
                     </ul>
                   </div>
@@ -157,14 +157,14 @@ export default function Detail({ categories, blog }) {
                       </li>
                     </ul>
                   </div> */}
-                  <div className="nxt-prev d-flex justify-content-between">
+                  {/* <div className="nxt-prev d-flex justify-content-between">
                     <a href="#" className="primary-btn black-btn">
                       &lt; Previous post{" "}
                     </a>
                     <a href="#" className="primary-btn black-btn">
                       Next post &gt;
                     </a>
-                  </div>
+                  </div> */}
                   <div className="author-info d-flex flex-row align-items-center">
                     <div className="author-img">
                       <img

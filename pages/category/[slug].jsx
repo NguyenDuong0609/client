@@ -68,7 +68,7 @@ export default function Index({ categories, blogs }) {
                   <div className="dopenav">
                     <ul id="nav">
                       <li>
-                        <a href="#">Pages</a>
+                        <a href="/blog">Pages</a>
                         {/* <ul className="dropdown">
                           <li>
                             <a href="category.html">Category</a>
@@ -79,7 +79,7 @@ export default function Index({ categories, blogs }) {
                         </ul> */}
                       </li>
                       <li>
-                        <a href="#about-section">About</a>
+                        <a href="/porfolio">Porfolio</a>
                       </li>
                     </ul>
                   </div>
@@ -144,7 +144,7 @@ export default function Index({ categories, blogs }) {
                   </a>
                 </div>
               ))}
-              <ul className="pagination">
+              {/* <ul className="pagination">
                 <li className="page-item disabled">
                   <a className="page-link" href="#" tabIndex="-1">
                     Prev
@@ -170,7 +170,7 @@ export default function Index({ categories, blogs }) {
                     Next
                   </a>
                 </li>
-              </ul>
+              </ul> */}
             </div>
             <Sidebar categories={categories} />
           </div>
