@@ -9,6 +9,15 @@ module.exports = {
             }
         ]
     },
+    async redirects() {
+        return [
+            {
+                source: "/",
+                destination: "/porfolio",
+                permanent: false,
+            }
+        ]
+    },
     env: {
         BASE_URL: process.env.BASE_URL,
         API_URL: process.env.API_URL,

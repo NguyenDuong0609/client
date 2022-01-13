@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
                 <meta name="description" content=""/>
                 <meta name="keywords" content=""/>
                 <meta charSet="UTF-8"/>
-                <title>F4theme | Minimal Multipurpose Html Template</title>
+                <title>Blog | Nguyen Duong Dev</title>
 
                 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"/>
                 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>

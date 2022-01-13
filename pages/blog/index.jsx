@@ -43,10 +43,10 @@ export default function Index({ categories, blogs }) {
             <div className="row">
               <nav className="dope-navbar justify-content-between" id="dopeNav">
                 <a className="nav-brand" href="index.html">
-                  <img
+                  {/* <img
                     src={process.env.BASE_URL + "/blog/img/logo.png"}
                     alt=""
-                  />
+                  /> */}
                 </a>
                 <div className="dope-navbar-toggler">
                   <span className="navbarToggler">
@@ -93,7 +93,7 @@ export default function Index({ categories, blogs }) {
         <div className="container">
           <div className="row align-items-center justify-content-center">
             <div className="col-lg-12 text-center">
-              <h1>Blog Posts</h1>
+              <h1>Blog</h1>
               <div className="paginations">
                 <a href="index.html">Home</a><span>/</span><a href="blog.html">Blog</a>
               </div>
@@ -176,10 +176,10 @@ export default function Index({ categories, blogs }) {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6 col-sm-6 footer-left">
-              <img
+              {/* <img
                 src={process.env.BASE_URL + "/blog/img/logo-w.png"}
                 alt="logo"
-              />
+              /> */}
             </div>
             <div className="col-lg-6 col-sm-6 footer-right">
               <ul className="social_links">
@@ -209,7 +209,7 @@ export default function Index({ categories, blogs }) {
               </ul>
             </div>
             <div className="col-lg-12 text-center copyright-wrap">
-              <div>&copy; F4H3M 2018 All Rights Reserved</div>
+              <div style={{ color: "#ffffff;"}}>&copy; Author 2022 All Rights Reserved</div>
             </div>
           </div>
         </div>

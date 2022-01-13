@@ -5,7 +5,7 @@ const porfolio = () => {
     return (
         <div>
            <Head>
-                <title>Personal Portfolio Webiste</title>
+                <title>Portfolio | Nguyen Duong Dev</title>
                 <meta charSet="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link href="porfolio/css/style.css" rel="stylesheet"/>
