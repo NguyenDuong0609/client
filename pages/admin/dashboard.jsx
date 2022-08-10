@@ -5,6 +5,9 @@ import Cookies from "js-cookie";
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
+  return {
+    props: {},
+  }
   if(!token) {
     return {
       redirect: {

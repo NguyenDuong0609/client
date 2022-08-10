@@ -125,7 +125,7 @@ export default function BlogCreate({ categories }) {
           if (!res.data.error) {
             window.location.href = "/admin/blog";
           } else {
-            alert("check field title");
+            alert(res.data.error.message);
           }
         })
         .catch((err) => alert("Image < 90kb or limit field"));
@@ -269,15 +269,15 @@ export default function BlogCreate({ categories }) {
                           required={true}
                         />
                       </div>
-                      <div className="form-group">
-                        <label className="bmd-label-floating">Slug</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={slug}
-                          disabled={true}
-                        />
-                      </div>
+                        <label className="col-form-label">Slug</label>
+                        <div className="form-group has-default">
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={slug}
+                            disabled={true}
+                          />
+                        </div>
                       <label htmlFor="" className="bmd-label-floating">
                         Description
                       </label>
@@ -346,7 +346,7 @@ export default function BlogCreate({ categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Customisable Select</h4>
+                      <h4 className="card-title">Category Parent</h4>
                     </div>
                     <div className="card-body">
                       <select
