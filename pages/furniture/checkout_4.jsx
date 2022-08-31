@@ -72,7 +72,7 @@ export default function Index({ }) {
                                 <span className="h2 title">Your order is completed!</span>
                             </div>
                             <div className="col-xs-6 text-right">
-                                <a onclick="window.print()" className="btn btn-main"><span className="icon icon-printer"></span> Print</a>
+                                <a onClick="window.print()" className="btn btn-main"><span className="icon icon-printer"></span> Print</a>
                             </div>
                         </div>
                     </div>
