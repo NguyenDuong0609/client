@@ -47,6 +47,7 @@ export const getServerSideProps = async (context) => {
   });
   const data = await res.json();
   if(data.error) {
+    console.log(data.error);
     return {
       redirect: {
         permanent: false,
