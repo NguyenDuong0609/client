@@ -36,36 +36,59 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-export const getServerSideProps = async (context) => {
+export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
-  if(!token) {
+  if (!token) {
     return {
       redirect: {
-        destination: '/admin/login',
+        destination: "/admin/login",
         permanent: false,
       },
-    }
+    };
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
+  const { params } = context;
+  const { id } = params;
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/blog/` + id, {
     headers: { Authorization: token },
   });
+  const res_sub = await fetch(
+    `${process.env.API_URL}/api/v1/admin/categories`,
+    {
+      headers: { Authorization: token },
+    }
+  );
 
   const data = await res.json();
 
+  const data_sub = await res_sub.json();
+
   return {
-    props: { categories: data.categories },
+    props: { blog: data.blog, categories: data_sub.categories },
   };
-};
+}
 
 /** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
-export default function Edit({ categories }) {
+export default function Edit({ blog, categories }) {
   const classes = useStyles();
+  const [deletemodal, setDeleteModal] = useState(false);
 
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [category, setCategory] = useState("");
+  const [idBlog, setIdBlog] = useState("");
+
+  useEffect(() => {
+    setIdBlog(blog[0]._id);
+    setTitle(blog[0].title);
+    setSlug(blog[0].slug);
+    setDescription(blog[0].description);
+    setContent(blog[0].content);
+    setCategory(blog[0].category);
+    setSelectedCategory(blog[0].category);
+  }, []);
 
   function sanitizeTitle(title) {
     var slug = "";
@@ -98,39 +121,28 @@ export default function Edit({ categories }) {
   };
 
   function submit() {
-    if (
-      title == "" ||
-      slug == "" ||
-      description == "" ||
-      content == "" ||
-      selectedCategory == ""
-    ) {
-      alert("Please enter field");
-    } else {
-      const token = Cookies.get("token");
-      axios
-        .post(
-          process.env.API_URL + "/api/v1/admin/blog",
-          {
-            title: title,
-            slug: slug,
-            description: description,
-            content: content,
-            category: selectedCategory,
-          },
-          {
-            headers: { Authorization: token },
-          }
-        )
-        .then((res) => {
-          if (!res.data.error) {
-            window.location.href = "/admin/blog";
-          } else {
-            alert(res.data.error.message);
-          }
-        })
-        .catch((err) => alert("Image < 90kb or limit field"));
-    }
+    const token = Cookies.get("token");
+    axios
+      .put(
+        process.env.API_URL + "/api/v1/admin/blog/" + idBlog,
+        {
+          title: title,
+          slug: slug,
+          description: description,
+          content: content,
+          category: selectedCategory,
+        },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then((res) => {
+        if (!res.data.error) {
+          window.location.href = "/admin/blog";
+        } else {
+          alert(res.data.error);
+        }
+      });
   }
 
   return (
@@ -254,11 +266,11 @@ export default function Edit({ categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Create Blog Form</h4>
+                      <h4 className="card-title">Stacked Form</h4>
                     </div>
                     <div className="card-body ">
                       <div className="form-group">
-                        <label className="bmd-label-floating">Title</label>
+                        <label>Title</label>
                         <input
                           type="text"
                           className="form-control"
@@ -267,18 +279,17 @@ export default function Edit({ categories }) {
                             setSlug(sanitizeTitle(e.target.value));
                             setTitle(e.target.value);
                           }}
-                          required={true}
                         />
                       </div>
-                        <label className="col-form-label">Slug</label>
-                        <div className="form-group has-default">
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={slug}
-                            disabled={true}
-                          />
-                        </div>
+                      <div className="form-group">
+                        <label>Slug</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={slug}
+                          disabled={true}
+                        />
+                      </div>
                       <label htmlFor="" className="bmd-label-floating">
                         Description
                       </label>
@@ -286,6 +297,7 @@ export default function Edit({ categories }) {
                         // setContents="My contents"
                         showToolbar={true}
                         onChange={handleDescriptionChange}
+                        defaultValue={description}
                         setDefaultStyle="height: auto"
                         setOptions={{
                           buttonList: [
@@ -311,6 +323,7 @@ export default function Edit({ categories }) {
                         // setContents="My contents"
                         showToolbar={true}
                         onChange={handleContentChange}
+                        defaultValue={content}
                         setDefaultStyle="height: 300px"
                         setOptions={{
                           buttonList: [
@@ -347,7 +360,7 @@ export default function Edit({ categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Category Parent</h4>
+                      <h4 className="card-title">Select Option</h4>
                     </div>
                     <div className="card-body">
                       <select
@@ -355,6 +368,7 @@ export default function Edit({ categories }) {
                         data-size="7"
                         data-style="btn btn-primary btn-round"
                         title="Choose One"
+                        value={category}
                         onChange={(e) => {
                           setSelectedCategory(e.target.value);
                         }}
