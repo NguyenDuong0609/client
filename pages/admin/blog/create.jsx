@@ -15,7 +15,8 @@ import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
 
 import dynamic from "next/dynamic";
-import "suneditor/dist/css/suneditor.min.css";
+// import "suneditor/dist/css/suneditor.min.css";
+import 'suneditor/src/assets/css/suneditor.css'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
