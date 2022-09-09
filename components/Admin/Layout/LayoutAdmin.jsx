@@ -51,7 +51,6 @@ const LayoutAdmin = ({ children }) => {
             "/assets/css/material-dashboard.min.css?v=2.2.2"
           }
           rel="stylesheet"
-          rel="stylesheet"
         />
         {/* CSS Just for demo purpose, don't include it in your project */}
         <link

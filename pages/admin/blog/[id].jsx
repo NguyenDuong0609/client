@@ -386,7 +386,7 @@ export default function Edit({ blog, categories }) {
                       </select>
                     </div>
                   </div>
-                  <div className="card">
+                  {/* <div className="card">
                     <div className="card-header card-header-rose card-header-icon">
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
@@ -419,7 +419,7 @@ export default function Edit({ blog, categories }) {
                             <option value="19">Piatra Neamt</option>
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </form>
