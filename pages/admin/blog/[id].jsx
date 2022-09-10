@@ -164,9 +164,6 @@ export default function Edit({ blog, categories }) {
                   </i>
                 </button>
               </div>
-              <a className="navbar-brand" href="#!">
-                Extended Tables
-              </a>
             </div>
             <button
               className="navbar-toggler"
@@ -184,12 +181,12 @@ export default function Edit({ blog, categories }) {
 
             <div className="collapse navbar-collapse justify-content-end">
               <ul className="navbar-nav">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#!">
                     <i className="material-icons">dashboard</i>
                     <p className="d-lg-none d-md-block">Stats</p>
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link"
@@ -224,7 +221,7 @@ export default function Edit({ blog, categories }) {
                     </a>
                   </div>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link"
                     href="#!"
@@ -251,7 +248,7 @@ export default function Edit({ blog, categories }) {
                       Log out
                     </a>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -266,7 +263,7 @@ export default function Edit({ blog, categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Stacked Form</h4>
+                      <h4 className="card-title">Edit Blog</h4>
                     </div>
                     <div className="card-body ">
                       <div className="form-group">
@@ -360,7 +357,7 @@ export default function Edit({ blog, categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Select Option</h4>
+                      <h4 className="card-title">Category</h4>
                     </div>
                     <div className="card-body">
                       <select

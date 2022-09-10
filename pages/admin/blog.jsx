@@ -91,9 +91,6 @@ export default function Blog({ blogs }) {
                   </i>
                 </button>
               </div>
-              <a className="navbar-brand" href="#!">
-                Extended Tables
-              </a>
             </div>
             <button
               className="navbar-toggler"
@@ -111,12 +108,12 @@ export default function Blog({ blogs }) {
 
             <div className="collapse navbar-collapse justify-content-end">
               <ul className="navbar-nav">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#!">
                     <i className="material-icons">dashboard</i>
                     <p className="d-lg-none d-md-block">Stats</p>
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link"
@@ -151,7 +148,7 @@ export default function Blog({ blogs }) {
                     </a>
                   </div>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link"
                     href="#!"
@@ -178,7 +175,7 @@ export default function Blog({ blogs }) {
                       Log out
                     </a>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -202,7 +199,7 @@ export default function Blog({ blogs }) {
                     <div className="card-icon">
                       <i className="material-icons">assignment</i>
                     </div>
-                    <h4 className="card-title">Blog List</h4>
+                    <h4 className="card-title">List Blog</h4>
                   </div>
                   <div className="card-body">
                     <div className="table-responsive">

@@ -152,9 +152,6 @@ export default function BlogCreate({ categories }) {
                   </i>
                 </button>
               </div>
-              <a className="navbar-brand" href="#!">
-                Extended Tables
-              </a>
             </div>
             <button
               className="navbar-toggler"
@@ -172,12 +169,12 @@ export default function BlogCreate({ categories }) {
 
             <div className="collapse navbar-collapse justify-content-end">
               <ul className="navbar-nav">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#!">
                     <i className="material-icons">dashboard</i>
                     <p className="d-lg-none d-md-block">Stats</p>
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link"
@@ -212,7 +209,7 @@ export default function BlogCreate({ categories }) {
                     </a>
                   </div>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link"
                     href="#!"
@@ -239,7 +236,7 @@ export default function BlogCreate({ categories }) {
                       Log out
                     </a>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -254,7 +251,7 @@ export default function BlogCreate({ categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Create Blog Form</h4>
+                      <h4 className="card-title">Create Blog</h4>
                     </div>
                     <div className="card-body ">
                       <div className="form-group">
@@ -347,7 +344,7 @@ export default function BlogCreate({ categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Category Parent</h4>
+                      <h4 className="card-title">Category</h4>
                     </div>
                     <div className="card-body">
                       <select

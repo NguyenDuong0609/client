@@ -178,9 +178,6 @@ export default function Category({ categories, categoriesParent }) {
                   </i>
                 </button>
               </div>
-              <a className="navbar-brand" href="#!">
-                Extended Tables
-              </a>
             </div>
             <button
               className="navbar-toggler"
@@ -198,12 +195,12 @@ export default function Category({ categories, categoriesParent }) {
 
             <div className="collapse navbar-collapse justify-content-end">
               <ul className="navbar-nav">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#!">
                     <i className="material-icons">dashboard</i>
                     <p className="d-lg-none d-md-block">Stats</p>
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link"
@@ -238,7 +235,7 @@ export default function Category({ categories, categoriesParent }) {
                     </a>
                   </div>
                 </li>
-                <li className="nav-item dropdown">
+                {/* <li className="nav-item dropdown">
                   <a
                     className="nav-link"
                     href="#!"
@@ -265,7 +262,7 @@ export default function Category({ categories, categoriesParent }) {
                       Log out
                     </a>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -290,7 +287,7 @@ export default function Category({ categories, categoriesParent }) {
                     <div className="card-icon">
                       <i className="material-icons">assignment</i>
                     </div>
-                    <h4 className="card-title">Simple Table</h4>
+                    <h4 className="card-title">List Category</h4>
                   </div>
                   <div className="card-body">
                     <div className="table-responsive">
@@ -375,7 +372,7 @@ export default function Category({ categories, categoriesParent }) {
                 <div className="card-icon">
                   <i className="material-icons">mail_outline</i>
                 </div>
-                <h4 className="card-title">Category Form</h4>
+                <h4 className="card-title">Add/Edit Category</h4>
               </div>
               <div className="card-body ">
                 <div className="form-group">
@@ -431,7 +428,7 @@ export default function Category({ categories, categoriesParent }) {
                   className="btn btn-rose"
                   onClick={() => submit()}
                 >
-                  Add
+                  Submit
                 </button>
               </div>
             </div>

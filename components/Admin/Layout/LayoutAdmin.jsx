@@ -28,7 +28,7 @@ const LayoutAdmin = ({ children }) => {
         <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>
-          Material Dashboard PRO by Creative Tim {process.env.BASE_URL}
+          Admin {process.env.BASE_URL}
         </title>
         <meta
           content="width=device-width, initial-scale=1.0, shrink-to-fit=no"

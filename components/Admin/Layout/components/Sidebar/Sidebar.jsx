@@ -26,8 +26,8 @@ export default function Sidebar({users}) {
     return (
         <div className="sidebar" data-color="rose" data-background-color="black" data-image={process.env.BASE_URL + "/assets/img/sidebar-1.jpg"}>
             <div className="logo">
-                <a href="http://www.creative-tim.com" className="simple-text logo-mini">CT</a>
-                <a href="http://www.creative-tim.com" className="simple-text logo-normal">Creative Tim</a>
+                <a href="http://www.creative-tim.com" className="simple-text logo-mini">AD</a>
+                <a href="http://www.creative-tim.com" className="simple-text logo-normal">Admin</a>
             </div>
             <div className="sidebar-wrapper">
                 <div className="user">
