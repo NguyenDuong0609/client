@@ -266,11 +266,11 @@ export default function Edit({ blog, categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Create Blog Form</h4>
+                      <h4 className="card-title">Stacked Form</h4>
                     </div>
                     <div className="card-body ">
                       <div className="form-group">
-                        <label className="bmd-label-floating">Title</label>
+                        <label>Title</label>
                         <input
                           type="text"
                           className="form-control"
@@ -279,18 +279,17 @@ export default function Edit({ blog, categories }) {
                             setSlug(sanitizeTitle(e.target.value));
                             setTitle(e.target.value);
                           }}
-                          required={true}
                         />
                       </div>
-                        <label className="col-form-label">Slug</label>
-                        <div className="form-group has-default">
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={slug}
-                            disabled={true}
-                          />
-                        </div>
+                      <div className="form-group">
+                        <label>Slug</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          value={slug}
+                          disabled={true}
+                        />
+                      </div>
                       <label htmlFor="" className="bmd-label-floating">
                         Description
                       </label>
@@ -298,6 +297,7 @@ export default function Edit({ blog, categories }) {
                         // setContents="My contents"
                         showToolbar={true}
                         onChange={handleDescriptionChange}
+                        defaultValue={description}
                         setDefaultStyle="height: auto"
                         setOptions={{
                           buttonList: [
@@ -323,6 +323,7 @@ export default function Edit({ blog, categories }) {
                         // setContents="My contents"
                         showToolbar={true}
                         onChange={handleContentChange}
+                        defaultValue={content}
                         setDefaultStyle="height: 300px"
                         setOptions={{
                           buttonList: [
@@ -359,7 +360,7 @@ export default function Edit({ blog, categories }) {
                       <div className="card-icon">
                         <i className="material-icons">mail_outline</i>
                       </div>
-                      <h4 className="card-title">Category Parent</h4>
+                      <h4 className="card-title">Select Option</h4>
                     </div>
                     <div className="card-body">
                       <select
@@ -367,6 +368,7 @@ export default function Edit({ blog, categories }) {
                         data-size="7"
                         data-style="btn btn-primary btn-round"
                         title="Choose One"
+                        value={category}
                         onChange={(e) => {
                           setSelectedCategory(e.target.value);
                         }}
