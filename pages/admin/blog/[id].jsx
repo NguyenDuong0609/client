@@ -68,14 +68,27 @@ export async function getServerSideProps(context) {
 }
 
 /** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
-export default function Edit({ categories }) {
+export default function Edit({ blog, categories }) {
   const classes = useStyles();
+  const [deletemodal, setDeleteModal] = useState(false);
 
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [category, setCategory] = useState("");
+  const [idBlog, setIdBlog] = useState("");
+
+  useEffect(() => {
+    setIdBlog(blog[0]._id);
+    setTitle(blog[0].title);
+    setSlug(blog[0].slug);
+    setDescription(blog[0].description);
+    setContent(blog[0].content);
+    setCategory(blog[0].category);
+    setSelectedCategory(blog[0].category);
+  }, []);
 
   function sanitizeTitle(title) {
     var slug = "";
@@ -108,39 +121,28 @@ export default function Edit({ categories }) {
   };
 
   function submit() {
-    if (
-      title == "" ||
-      slug == "" ||
-      description == "" ||
-      content == "" ||
-      selectedCategory == ""
-    ) {
-      alert("Please enter field");
-    } else {
-      const token = Cookies.get("token");
-      axios
-        .post(
-          process.env.API_URL + "/api/v1/admin/blog",
-          {
-            title: title,
-            slug: slug,
-            description: description,
-            content: content,
-            category: selectedCategory,
-          },
-          {
-            headers: { Authorization: token },
-          }
-        )
-        .then((res) => {
-          if (!res.data.error) {
-            window.location.href = "/admin/blog";
-          } else {
-            alert(res.data.error.message);
-          }
-        })
-        .catch((err) => alert("Image < 90kb or limit field"));
-    }
+    const token = Cookies.get("token");
+    axios
+      .put(
+        process.env.API_URL + "/api/v1/admin/blog/" + idBlog,
+        {
+          title: title,
+          slug: slug,
+          description: description,
+          content: content,
+          category: selectedCategory,
+        },
+        {
+          headers: { Authorization: token },
+        }
+      )
+      .then((res) => {
+        if (!res.data.error) {
+          window.location.href = "/admin/blog";
+        } else {
+          alert(res.data.error);
+        }
+      });
   }
 
   return (
