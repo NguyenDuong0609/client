@@ -36,26 +36,36 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-export const getServerSideProps = async (context) => {
+export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
-  if(!token) {
+  if (!token) {
     return {
       redirect: {
-        destination: '/admin/login',
+        destination: "/admin/login",
         permanent: false,
       },
-    }
+    };
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
+  const { params } = context;
+  const { id } = params;
+  const res = await fetch(`${process.env.API_URL}/api/v1/admin/blog/` + id, {
     headers: { Authorization: token },
   });
+  const res_sub = await fetch(
+    `${process.env.API_URL}/api/v1/admin/categories`,
+    {
+      headers: { Authorization: token },
+    }
+  );
 
   const data = await res.json();
 
+  const data_sub = await res_sub.json();
+
   return {
-    props: { categories: data.categories },
+    props: { blog: data.blog, categories: data_sub.categories },
   };
-};
+}
 
 /** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
 export default function Edit({ categories }) {
