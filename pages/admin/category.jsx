@@ -109,6 +109,9 @@ export default function Category({ categories, categoriesParent }) {
     axios
       .delete(process.env.API_URL + "/api/v1/admin/category/delete/" + idCategory)
       .then((res) => {
+        setDeleteModal(false);
+        notify('success', 'delete category successfully');
+        setTimeout(() => { }, 7000);
         window.location.href = "/admin/category";
       });
   }
@@ -133,6 +136,9 @@ export default function Category({ categories, categoriesParent }) {
         })
         .then((res) => {
           if (!res.data.error) {
+            setEditModal(false);
+            notify('success', 'create category successfully');
+            setTimeout(() => { }, 7000);
             window.location.href = "/admin/category";
           } else {
             alert(res.data.error);
@@ -142,7 +148,14 @@ export default function Category({ categories, categoriesParent }) {
   }
 
   function update() {
-    axios
+    if (idCategory === parentId) {
+      // alert('category cannot be parent category for itself');
+      // setDeleteModal(false);
+      setEditModal(false);
+      notify('danger', 'category cannot be parent category for itself');
+      setTimeout(() => { }, 10000);
+    } else {
+      axios
       .put(process.env.API_URL + "/api/v1/admin/category/update", {
         _id: idCategory,
         name: name,
@@ -152,11 +165,25 @@ export default function Category({ categories, categoriesParent }) {
       .then((res) => {
         if (!res.data.error) {
           setIdCategory(null);
+          setEditModal(false);
+          notify('success', 'update category successfully');
+          setTimeout(() => { }, 7000);
           window.location.href = "/admin/category/";
         } else {
           alert(res.data.error);
         }
       });
+    }
+  }
+
+  function getParent(categoriesParent, category) {
+    let cateParent;
+    categoriesParent.filter(item => {
+      if ( item._id === category.parentId) {
+        cateParent = item;
+      }
+    })
+    return <p>{cateParent ? cateParent.name : ""}</p>
   }
 
   return (
@@ -307,7 +334,8 @@ export default function Category({ categories, categoriesParent }) {
                               <td className="text-center">1</td>
                               <td>{category.name}</td>
                               <td>{category.slug}</td>
-                              <td>{category.parentId}</td>
+                              {/* <td>{category.parentId}</td> */}
+                              <td>{ getParent(categoriesParent, category)}</td>
                               <td className="td-actions text-right">
                                 <button
                                   type="button"

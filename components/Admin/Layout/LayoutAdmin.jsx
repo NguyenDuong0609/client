@@ -172,6 +172,7 @@ const LayoutAdmin = ({ children }) => {
         src={process.env.BASE_URL + "/assets/demo/jquery.sharrre.js"}
       ></script>
       <script src={process.env.BASE_URL + "/assets/js/custom.js"} />
+      <script src={process.env.BASE_URL + "/assets/js/notify_custom.js"} />
     </>
   );
 };
