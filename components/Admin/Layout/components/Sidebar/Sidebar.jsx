@@ -7,7 +7,7 @@ export default function Sidebar({users}) {
 
     useEffect(() => {
         axios.get(process.env.API_URL + "/api/v1/admin/me", {
-            headers: { Authorization: Cookies.get("token") },
+            headers: { Authorization:  'Bearer ' + Cookies.get("token") },
           })
             .then((res) => {
               setInFoUser(res.data.user);
