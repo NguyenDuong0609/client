@@ -47,7 +47,6 @@ export const getServerSideProps = async (context) => {
   });
   const data = await res.json();
   if(data.error) {
-    console.log(data.error);
     return {
       redirect: {
         permanent: false,
@@ -89,9 +88,8 @@ export default function Home({ users }) {
     } else {
       setIdUser(idUser);
       axios
-        .get(process.env.API_URL + "/api/v1/admin/user/" + idUser)
+        .get(process.env.API_URL + "/api/v1/admin/user/" + idUser, {headers: { Authorization: Cookies.get('token') }})
         .then((res) => {
-          console.log(res);
           setName(res.data.user.name);
           setEmail(res.data.user.email);
           setRole(res.data.user.role);
@@ -137,7 +135,7 @@ export default function Home({ users }) {
         name: name,
         email: email,
         role: role,
-      })
+      }, {headers: { Authorization: Cookies.get('token') }})
       .then((res) => {
         if (!res.data.error) {
           setIdUser("");

@@ -117,6 +117,7 @@ export default function BlogCreate({ categories }) {
             description: description,
             content: content,
             category: selectedCategory,
+            tags: 'blog'
           },
           {
             headers: { Authorization: token },
@@ -124,12 +125,14 @@ export default function BlogCreate({ categories }) {
         )
         .then((res) => {
           if (!res.data.error) {
+            notify('success', 'create blog successfully');
+            setTimeout(() => { }, 10000);
             window.location.href = "/admin/blog";
           } else {
             alert(res.data.error.message);
           }
-        })
-        .catch((err) => alert("Image < 90kb or limit field"));
+        });
+        //.catch((err) => alert("Image < 90kb or limit field"));
     }
   }
 

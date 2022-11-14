@@ -15,7 +15,7 @@ export default function Sidebar({users}) {
     }, []);
 
     function logOut() {
-        axios.get(process.env.API_URL + "/api/v1/admin/logout/")
+        axios.get(process.env.API_URL + "/api/v1/admin/logout/", {headers: { Authorization: Cookies.get('token') }})
             .then((res) => {
                 Cookies.remove("token");
                 localStorage.removeItem('authenticate');

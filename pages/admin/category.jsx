@@ -51,7 +51,7 @@ export const getServerSideProps = async (context) => {
   const data = await res.json();
 
   return {
-    props: { categories: data.categories, categoriesParent: dataParent.category },
+    props: { categories: data.categories, categoriesParent: dataParent.categories },
   };
 };
 
@@ -107,11 +107,11 @@ export default function Category({ categories, categoriesParent }) {
 
   function hanldeDeleteCategory() {
     axios
-      .delete(process.env.API_URL + "/api/v1/admin/category/delete/" + idCategory)
+      .delete(process.env.API_URL + "/api/v1/admin/category/delete/" + idCategory, {headers: { Authorization: Cookies.get('token') }})
       .then((res) => {
         setDeleteModal(false);
         notify('success', 'delete category successfully');
-        setTimeout(() => { }, 7000);
+        setTimeout(() => { }, 10000);
         window.location.href = "/admin/category";
       });
   }
@@ -133,12 +133,12 @@ export default function Category({ categories, categoriesParent }) {
           name: name,
           slug: slug,
           parentId: parentId,
-        })
+        }, {headers: { Authorization: Cookies.get('token') }},)
         .then((res) => {
           if (!res.data.error) {
             setEditModal(false);
             notify('success', 'create category successfully');
-            setTimeout(() => { }, 7000);
+            setTimeout(() => { }, 10000);
             window.location.href = "/admin/category";
           } else {
             alert(res.data.error);
@@ -161,13 +161,15 @@ export default function Category({ categories, categoriesParent }) {
         name: name,
         slug: slug,
         parentId: parentId,
-      })
+        type: 'category'
+      }, {headers: { Authorization: Cookies.get('token') }})
       .then((res) => {
+        console.log(res);
         if (!res.data.error) {
           setIdCategory(null);
           setEditModal(false);
           notify('success', 'update category successfully');
-          setTimeout(() => { }, 7000);
+          setTimeout(() => { }, 10000);
           window.location.href = "/admin/category/";
         } else {
           alert(res.data.error);
@@ -381,9 +383,9 @@ export default function Category({ categories, categoriesParent }) {
           onClose={() => setEditModal(false)}
           aria-labelledby="modal-slide-title"
           aria-describedby="modal-slide-description"
-          style={{ paddingBottom: "400px", with: "1000px" }}
+          
         >
-          <DialogTitle id="classic-modal-slide-title" disableTypography>
+          <DialogTitle id="classic-modal-slide-title" disableTypography style={{height: "5px"}}>
             <button
               type="button"
               onClick={() => setEditModal(false)}

@@ -138,6 +138,8 @@ export default function Edit({ blog, categories }) {
       )
       .then((res) => {
         if (!res.data.error) {
+          notify('success', 'update blog successfully');
+          setTimeout(() => { }, 10000);
           window.location.href = "/admin/blog";
         } else {
           alert(res.data.error);
