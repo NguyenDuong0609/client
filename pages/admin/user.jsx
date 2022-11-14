@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const getServerSideProps = async (context) => {
+  console.log(context.req.cookies);
   const token = context.req.cookies.token;
 
   if(!token) {
@@ -43,7 +44,7 @@ export const getServerSideProps = async (context) => {
     }
   }
   const res = await fetch(`${process.env.API_URL}/api/v1/admin/users`, {
-    headers: { Authorization: token },
+    headers: { Authorization: 'Bearer ' + token },
   });
   const data = await res.json();
   if(data.error) {
