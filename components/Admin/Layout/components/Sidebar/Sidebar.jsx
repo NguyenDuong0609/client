@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-  
-export default function Sidebar({users}) {
+
+export default function Sidebar({user}) {
     const [infoUser, setInFoUser] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get(process.env.API_URL + "/api/v1/admin/me", {
-    //         headers: { authorization:  'Bearer ' + Cookies.get("token") },
-    //       })
-    //         .then((res) => {
-    //           setInFoUser(res.data.user);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios.get(process.env.API_URL + "/api/v1/admin/me", {
+            headers: { authorization: Cookies.get("token") },
+          })
+            .then((res) => {
+              setInFoUser(res.data.user);
+            });
+    }, []);
 
     function logOut() {
         axios.get(process.env.API_URL + "/api/v1/admin/logout/", {headers: { Authorization: Cookies.get('token') }})
@@ -36,7 +36,7 @@ export default function Sidebar({users}) {
                     </div>
                     <div className="user-info">
                         <a data-toggle="collapse" href="#collapseExample" className="username">
-                            <span>Name<b className="caret"></b></span>
+                            <span>{infoUser.name}<b className="caret"></b></span>
                         </a>
                         <div className="collapse" id="collapseExample">
                             <ul className="nav">
