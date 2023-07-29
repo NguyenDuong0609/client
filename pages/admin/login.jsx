@@ -3,30 +3,39 @@ import Head from 'next/head'
 import Image from 'next/image'
 import LayoutAdmin from '../../components/Admin/Layout/LayoutAdmin'
 import Cookies from 'js-cookie'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 import { useState } from 'react';
 import axios from "axios";
 
 export default function Home({ req, res }) {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    function submit(e) {
-      if(email == null || password == null) {
-        alert('Please login');
-      } else {
-        axios.post(process.env.API_URL + "/api/v1/admin/login", { email: email, password: password })
+    const validationSchema = Yup.object().shape({
+      email: Yup.string().required("Email is required").email("Email is invalid"),
+      password: Yup.string().required("Password is required"),
+    });
+
+    const formOptions = { resolver: yupResolver(validationSchema) };
+    const { register, handleSubmit, formState } = useForm(formOptions);
+    const { errors } = formState;
+
+    function onSubmit(e) {
+      axios.post(process.env.API_URL + "/api/v1/admin/login", { email: e.email, password: e.password })
         .then((res) => {
           if(!res.data.error) {
             localStorage.setItem('authenticate', true);
             Cookies.set('token', res.data.token);
             window.location.href='/admin/user';
-          }else {
-              alert(res.data.error);
           }
+        })
+        .catch(err => {
+          notify('danger', 'Login unsuccessful');
         });
-      }
     }
     return (
       <>
@@ -45,6 +54,7 @@ export default function Home({ req, res }) {
           <link href="../../assets/css/material-dashboard.min.css?v=2.2.2" rel="stylesheet" />
           {/* CSS Just for demo purpose, don't include it in your project */}
           <link href="../../assets/demo/demo.css" rel="stylesheet" />
+          <link href="porfolio/css/custom-toastr.css" rel="stylesheet"/>
         </Head>
 
         <main className="off-canvas-sidebar">
@@ -61,7 +71,7 @@ export default function Home({ req, res }) {
               <div className="container">
                 <div className="row">
                   <div className="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-                    <form className="form" method="" action="">
+                    <form className="form" method="" action="" onSubmit={handleSubmit(onSubmit)} id="reset">
                       <div className="card card-login card-hidden">
                         <div className="card-header card-header-rose text-center">
                           <h4 className="card-title">Login</h4>
@@ -86,8 +96,16 @@ export default function Home({ req, res }) {
                                   <i className="material-icons">email</i>
                                 </span>
                               </div>
-                              <input type="email" name="email" value={email} onChange={(e) => {setEmail(e.target.value)}} className="form-control" placeholder="Email..."/>
+                              <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="Email..."
+                                {...register('email')}
+                                name="email"
+                                id="email"
+                              />
                             </div>
+                            <div className="error-message" style={{ marginLeft: "15px"}}>{errors.email?.message}</div>
                           </span>
                           <span className="bmd-form-group">
                             <div className="input-group">
@@ -96,12 +114,20 @@ export default function Home({ req, res }) {
                                   <i className="material-icons">lock_outline</i>
                                 </span>
                               </div>
-                              <input type="password" name="password" value={password} onChange={(e) => {setPassword(e.target.value)}} className="form-control" placeholder="Password..."/>
+                              <input 
+                                type="password" 
+                                className="form-control" 
+                                placeholder="Password..."
+                                {...register('password')}
+                                name="password"
+                                id="password"
+                              />
                             </div>
+                            <div className="error-message" style={{ marginLeft: "15px"}}>{errors.password?.message}</div>
                           </span>
                         </div>
                         <div className="card-footer justify-content-center">
-                          <a onClick={() => submit()} className="btn btn-rose btn-link btn-lg">Lets Go</a>
+                          <a onClick={handleSubmit(onSubmit)} className="btn btn-rose btn-link btn-lg">Lets Go</a>
                         </div>
                       </div>
                     </form>
@@ -127,6 +153,7 @@ export default function Home({ req, res }) {
           <script src="../../assets/js/login.js"></script>
           {/* Sharrre libray */}
           <script src="../../assets/demo/jquery.sharrre.js"></script>
+          <script src={process.env.BASE_URL + "/assets/js/notify_custom.js"} />
         </main>
 
       </>

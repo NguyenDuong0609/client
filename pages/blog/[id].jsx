@@ -77,7 +77,7 @@ export default function Detail({ categories, blog }) {
                         </ul> */}
                       </li>
                       <li>
-                        <a href="/porfolio">Porfolio</a>
+                        <a href="/portfolio">Portfolio</a>
                       </li>
                     </ul>
                   </div>

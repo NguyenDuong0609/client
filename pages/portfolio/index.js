@@ -1,7 +1,75 @@
-import React from 'react';
-import Head from 'next/head'
+import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import axios from "axios";
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+
+import getConfig from 'next/config';
+const { serverRuntimeConfig } = getConfig();
 
 const porfolio = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Name is required"),
+        email: Yup.string().required("Email is required").email("Email is invalid"),
+        subject: Yup.string().required("Subject is required"),
+        message: Yup.string().required("Message is required"),
+    });
+
+    const formOptions = { resolver: yupResolver(validationSchema) };
+    const { register, handleSubmit, formState } = useForm(formOptions);
+    const { errors } = formState;
+
+    function notify(status, message) {
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-custom-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          }
+        toastr.clear();
+        if(status) {
+            setTimeout(() => toastr.success(message));
+        }
+        if(!status) {
+            setTimeout(() => toastr.error(message));
+        }
+      }
+
+    function onSubmit(e) {
+        axios
+        .post(process.env.API_URL + "/api/v1/portfolio/contact", {
+            name: e.name,
+            subject: e.subject,
+            email: e.email,
+            message: e.message
+        })
+        .then((res) => {
+            notify(true, 'Send contact successfully');
+        })
+        .catch(err => {
+            notify(false, 'Send contact unsuccessful');
+        });
+    }
+
     return (
         <div>
            <Head>
@@ -15,6 +83,7 @@ const porfolio = () => {
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+                <link href="porfolio/css/custom-toastr.css" rel="stylesheet"/>
            </Head>
            <div className="scroll-up-btn">
                 <i className="fas fa-angle-up"></i>
@@ -88,8 +157,7 @@ const porfolio = () => {
                                 <i className="fas fa-chart-line"></i>
                                 <div className="text">Ongoing Support</div>
                                 <p>
-                                    Your website is always growing. Whether you’re adding new features or making improvements I’m here to help. 
-                                    I won’t leave you guessing how your own website works and will always be available to answer any questions you might have.
+                                    For select projects, we stay on as technical support providers and partners to offer ongoing maintenance and updates.
                                 </p>
                             </div>
                         </div>
@@ -98,8 +166,7 @@ const porfolio = () => {
                                 <i className="fas fa-mobile"></i>
                                 <div className="text">Native Apps</div>
                                 <p>
-                                    Use Flutter for building simple native mobile applications. Flutter is
-                                    modern, fast, cross-platform, and popular.
+                                    As a Flutter app developer, we help you design, develop, test & release platform-independent apps with a native look & feel!
                                 </p>
                             </div>
                         </div>
@@ -240,25 +307,54 @@ const porfolio = () => {
                         </div>
                         <div className="column right">
                             <div className="text">Message me</div>
-                            <form action="#">
-                                <div className="fields">
+                            <form action="" method="" onSubmit={handleSubmit(onSubmit)} id="reset">
+                                <div className="fields" style={{ marginBottom: "30px"}}>
                                     <div className="field name">
-                                        <input type="text" placeholder="Name" required/>
+                                        <input 
+                                            type="text" 
+                                            placeholder="Name" 
+                                            {...register('name')}
+                                            name="name"
+                                            id="name"
+                                        />
+                                        <div className="error-message">{errors.name?.message}</div>
                                     </div>
                                     <div className="field email">
-                                        <input type="email" placeholder="Email" required/>
+                                        <input 
+                                            type="text" 
+                                            placeholder="Email" 
+                                            {...register('email')}
+                                            name="email"
+                                            id="email"
+                                        />
+                                        <div className="error-message">{errors.email?.message}</div>
                                     </div>
                                 </div>
-                                <div className="fields">
+                                <div className="fields" style={{ marginBottom: "30px"}}>
                                     <div className="field">
-                                        <input type="text" placeholder="Subject" required/>
+                                        <input 
+                                            type="text" 
+                                            placeholder="Subject" 
+                                            {...register('subject')}
+                                            name="subject"
+                                            id="subject"
+                                        />
+                                        <div className="error-message">{errors.subject?.message}</div>
                                     </div>
                                 </div>
-                                <div className="field textarea">
-                                    <textarea name="" id="" cols="30" rows="10" placeholder="Describle project.." required></textarea>
+                                <div className="field textarea" style={{ marginBottom: "30px"}}>
+                                    <textarea 
+                                        cols="30" 
+                                        rows="10" 
+                                        placeholder="Enter Message.." 
+                                        {...register('message')}
+                                        name="message"
+                                        id="message"
+                                    ></textarea>
+                                     <div className="error-message">{errors.message?.message}</div>
                                 </div>
                                 <div className="button">
-                                    <button type="button">Send message</button>
+                                    <button type="button" onClick={handleSubmit(onSubmit)}>Send message</button>
                                 </div>
                             </form>
                         </div>
