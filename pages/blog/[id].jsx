@@ -7,9 +7,9 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 export const getServerSideProps = async (context) => {
   const { params } = context;
   const { id } = params;
-  const blogRes1 = await fetch(`${process.env.API_URL}/api/v1/client/blog/` + id);
+  const blogRes1 = await fetch(`${process.env.API_SSR_URL}/api/v1/client/blog/` + id);
 
-  const res = await fetch(`${process.env.API_URL}/api/v1/client/categories`);
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/client/categories`);
 
   const data = await res.json();
 

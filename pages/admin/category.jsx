@@ -38,11 +38,11 @@ export const getServerSideProps = async (context) => {
       },
     }
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/admin/categories`, {
     headers: { Authorization: token },
   });
 
-  const parent = await fetch(`${process.env.API_URL}/api/v1/admin/categories-parent`, {
+  const parent = await fetch(`${process.env.API_SSR_URL}/api/v1/admin/categories-parent`, {
     headers: { Authorization: token },
   });
 
@@ -96,7 +96,7 @@ export default function Category({ categories, categoriesParent }) {
     } else {
       setIdCategory(idCategory);
       axios
-        .get(process.env.API_URL + "/api/v1/admin/category/" + idCategory)
+        .get(process.env.API_CSR_URL + "/api/v1/admin/category/" + idCategory)
         .then((res) => {
           setName(res.data.category[0].name);
           setSlug(res.data.category[0].slug);
@@ -107,7 +107,7 @@ export default function Category({ categories, categoriesParent }) {
 
   function hanldeDeleteCategory() {
     axios
-      .delete(process.env.API_URL + "/api/v1/admin/category/delete/" + idCategory, {headers: { Authorization: Cookies.get('token') }})
+      .delete(process.env.API_CSR_URL + "/api/v1/admin/category/delete/" + idCategory, {headers: { Authorization: Cookies.get('token') }})
       .then((res) => {
         setDeleteModal(false);
         notify('success', 'delete category successfully');
@@ -129,7 +129,7 @@ export default function Category({ categories, categoriesParent }) {
       alert("Please enter fields");
     } else {
       axios
-        .post(process.env.API_URL + "/api/v1/admin/category/create", {
+        .post(process.env.API_CSR_URL + "/api/v1/admin/category/create", {
           name: name,
           slug: slug,
           parentId: parentId,
@@ -156,7 +156,7 @@ export default function Category({ categories, categoriesParent }) {
       setTimeout(() => { }, 10000);
     } else {
       axios
-      .put(process.env.API_URL + "/api/v1/admin/category/update", {
+      .put(process.env.API_CSR_URL + "/api/v1/admin/category/update", {
         _id: idCategory,
         name: name,
         slug: slug,

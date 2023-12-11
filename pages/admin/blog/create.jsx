@@ -46,7 +46,7 @@ export const getServerSideProps = async (context) => {
       },
     }
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/categories`, {
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/admin/categories`, {
     headers: { Authorization: token },
   });
 
@@ -110,7 +110,7 @@ export default function BlogCreate({ categories }) {
       const token = Cookies.get("token");
       axios
         .post(
-          process.env.API_URL + "/api/v1/admin/blog",
+          process.env.API_CSR_URL + "/api/v1/admin/blog",
           {
             title: title,
             slug: slug,

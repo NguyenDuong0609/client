@@ -7,9 +7,9 @@ import getConfig from 'next/config';
 const { serverRuntimeConfig } = getConfig();
 
 export const getServerSideProps = async (context) => {
-  const res = await fetch(`${process.env.API_URL}/api/v1/client/categories`);
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/client/categories`);
 
-  const blogRes = await fetch(`${process.env.API_URL}/api/v1/client/blogs`);
+  const blogRes = await fetch(`${process.env.API_SSR_URL}/api/v1/client/blogs`);
 
   const data = await res.json();
 

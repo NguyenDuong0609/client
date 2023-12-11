@@ -20,9 +20,11 @@ module.exports = {
     },
     env: {
         BASE_URL: process.env.BASE_URL,
-        API_URL: process.env.API_URL,
+        API_SSR_URL: process.env.API_SSR_URL,
+        API_CSR_URL: process.env.API_CSR_URL,
     },
     serverRuntimeConfig: {
-        API_URL: process.env.API_URL,
+        API_SSR_URL: process.env.API_SSR_URL,
+        API_CSR_URL: process.env.API_CSR_URL,
     },
 }

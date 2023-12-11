@@ -39,7 +39,7 @@ export const getServerSideProps = async (context) => {
       },
     }
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/blogs`, {
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/admin/blogs`, {
     headers: { Authorization: token },
   });
 
@@ -63,7 +63,7 @@ export default function Blog({ blogs }) {
   function hanldeDeleteBlog() {
     const token = Cookies.get("token");
     axios
-      .delete(process.env.API_URL + "/api/v1/admin/blog/" + idBlog, {
+      .delete(process.env.API_CSR_URL + "/api/v1/admin/blog/" + idBlog, {
         headers: { Authorization: token },
       })
       .then((res) => {

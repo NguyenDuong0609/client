@@ -25,7 +25,7 @@ export default function Home({ req, res }) {
     const { errors } = formState;
 
     function onSubmit(e) {
-      axios.post(process.env.API_URL + "/api/v1/admin/login", { email: e.email, password: e.password })
+      axios.post(process.env.API_CSR_URL + "/api/v1/admin/login", { email: e.email, password: e.password })
         .then((res) => {
           if(!res.data.error) {
             localStorage.setItem('authenticate', true);

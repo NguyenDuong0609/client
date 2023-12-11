@@ -11,8 +11,8 @@ export const getServerSideProps = async (context) => {
   const { params } = context;
   const { slug } = params;
 
-  const res = await fetch(`${process.env.API_URL}/api/v1/client/category/` + slug);
-  const categoriesRes = await fetch(`${process.env.API_URL}/api/v1/client/categories`);
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/client/category/` + slug);
+  const categoriesRes = await fetch(`${process.env.API_SSR_URL}/api/v1/client/categories`);
 
   const data = await res.json();
   const categoriesData = await categoriesRes.json();

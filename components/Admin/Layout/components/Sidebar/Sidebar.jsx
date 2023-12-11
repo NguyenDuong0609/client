@@ -6,7 +6,7 @@ export default function Sidebar({user}) {
     const [infoUser, setInFoUser] = useState(false);
 
     useEffect(() => {
-        axios.get(process.env.API_URL + "/api/v1/admin/me", {
+        axios.get(process.env.API_CSR_URL + "/api/v1/admin/me", {
             headers: { authorization: Cookies.get("token") },
           })
             .then((res) => {
@@ -15,7 +15,7 @@ export default function Sidebar({user}) {
     }, []);
 
     function logOut() {
-        axios.get(process.env.API_URL + "/api/v1/admin/logout/", {headers: { Authorization: Cookies.get('token') }})
+        axios.get(process.env.API_CSR_URL + "/api/v1/admin/logout/", {headers: { Authorization: Cookies.get('token') }})
             .then((res) => {
                 Cookies.remove("token");
                 localStorage.removeItem('authenticate');

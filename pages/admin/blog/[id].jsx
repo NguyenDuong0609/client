@@ -48,11 +48,11 @@ export async function getServerSideProps(context) {
   }
   const { params } = context;
   const { id } = params;
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/blog/` + id, {
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/admin/blog/` + id, {
     headers: { Authorization: token },
   });
   const res_sub = await fetch(
-    `${process.env.API_URL}/api/v1/admin/categories`,
+    `${process.env.API_SSR_URL}/api/v1/admin/categories`,
     {
       headers: { Authorization: token },
     }
@@ -124,7 +124,7 @@ export default function Edit({ blog, categories }) {
     const token = Cookies.get("token");
     axios
       .put(
-        process.env.API_URL + "/api/v1/admin/blog/" + idBlog,
+        process.env.API_CSR_URL + "/api/v1/admin/blog/" + idBlog,
         {
           title: title,
           slug: slug,

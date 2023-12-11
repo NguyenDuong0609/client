@@ -41,7 +41,7 @@ export const getServerSideProps = async (context) => {
       },
     }
   }
-  const res = await fetch(`${process.env.API_URL}/api/v1/admin/users`, {
+  const res = await fetch(`${process.env.API_SSR_URL}/api/v1/admin/users`, {
     headers: { Authorization: token },
   });
   const data = await res.json();
@@ -87,7 +87,7 @@ export default function Home({ users }) {
     } else {
       setIdUser(idUser);
       axios
-        .get(process.env.API_URL + "/api/v1/admin/user/" + idUser, {headers: { Authorization: Cookies.get('token') }})
+        .get(process.env.API_CSR_URL + "/api/v1/admin/user/" + idUser, {headers: { Authorization: Cookies.get('token') }})
         .then((res) => {
           setName(res.data.user.name);
           setEmail(res.data.user.email);
@@ -99,7 +99,7 @@ export default function Home({ users }) {
   function hanldeDeleteUser() {
     const token = Cookies.get("token");
     axios
-      .delete(process.env.API_URL + "/api/v1/admin/user/" + idUser, {
+      .delete(process.env.API_CSR_URL + "/api/v1/admin/user/" + idUser, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -112,7 +112,7 @@ export default function Home({ users }) {
       alert("Please enter fields");
     } else {
       axios
-        .post(process.env.API_URL + "/api/v1/admin/register", {
+        .post(process.env.API_CSR_URL + "/api/v1/admin/register", {
           name: name,
           email: email,
           password: password,
@@ -130,7 +130,7 @@ export default function Home({ users }) {
 
   function update() {
     axios
-      .put(process.env.API_URL + "/api/v1/admin/user/" + idUser, {
+      .put(process.env.API_CSR_URL + "/api/v1/admin/user/" + idUser, {
         name: name,
         email: email,
         role: role,
